@@ -64,5 +64,4 @@ class Selection :
 
 
 if __name__ == '__main__' :
-    s = Selection(with_email_address=True)
-    print(s.list)
+    pass

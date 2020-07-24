@@ -38,6 +38,15 @@ def get_available_countries() :
     return available_countries
 
 
+def get_influencers_by_country(country_name) :
+    list = []
+    all_countries = get_col_values("COUNTRY")
+    for i in range(len(all_countries)) :
+        if all_countries[i] == country_name :
+            list.append(get_cell_value_from_index(i, 1))
+    return list
+
+
 def get_influencers_with_email_address() :
     list = []
     email_addresses = get_col_values("MAIL")
@@ -51,7 +60,7 @@ def get_influencers_contacted_by(contacting_means) :
     list = []
     all_contacting_means = get_col_values("CONTACTED BY")
     for i in range(len(all_contacting_means)) :
-        if all_contacting_means[i] != "CONTACTED BY" and all_contacting_means[i] == contacting_means :
+        if all_contacting_means[i] == contacting_means :
             list.append(get_cell_value_from_index(i, 1))
     return list
 
@@ -119,4 +128,4 @@ class Influencer :
 
 
 if __name__ == '__main__' :
-   pass
+    print(get_influencers_with_email_adress())

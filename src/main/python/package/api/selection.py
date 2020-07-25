@@ -17,7 +17,7 @@ class Selection :
         self.lenght = 0
         self.uuid = None
         self.child = []
-        self.create()
+        self.influencers = get_matching_influencers()
 
     def get_criterias(self) :
         criterias = []
@@ -44,11 +44,14 @@ class Selection :
             get_influencers_contacted_by(criteria)
 
     def get_matching_influencers(self) :
-        self.list = []
+        list = []
         criterias = self.get_criterias()
         for criteria in criterias:
-            self.list += self.call_right_function(criteria)
-        return self.list
+            list += self.call_right_function(criteria)
+        for influencer in list:
+            if list.count(influencer) != len(criterias):
+                list.remove(influencer)
+        return list
 
     def is_matching_criterias(self, influencer):
         pass

@@ -1,14 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
-         "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-
-cred = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
-
-client = gspread.authorize(cred)
-
-sheet = client.open("test").sheet1
+from package.api.constants import scope, cred, client, sheet
 
 
 def get_col_values(string) :
@@ -116,7 +109,6 @@ def get_cell_value_from_index(current_index, col) :
     row = current_index + 1
     value = sheet.cell(row, col).value
     return value
-
 
 # print(getCellRange("bblyn", "USA"))
 # print(in_number("6.5k"))

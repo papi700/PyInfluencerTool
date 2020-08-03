@@ -1,4 +1,9 @@
+import smtplib
+from email.message import EmailMessage
+import json
+
 from package.api.sheet import *
+from package.api.constants import SERVER_LOGIN, SERVER_PASSWORD
 
 
 def get_influencer_data_by_username(username) :
@@ -25,9 +30,9 @@ def get_influencers_by_engagement_rate(min, max) :
     list = []
     engagement_rates = get_col_values("E.R")
     for i in range(len(engagement_rates)) :
-        if engagement_rates != "E.R" :
-            engagement_rates[i] = float(engagement_rates[i].replace("%", ""))
-            if min <= engagement_rates[i] <= max :
+        if engagement_rates[i] != "E.R" :
+            current_engagement_rate = float(engagement_rates[i].replace("%", ""))
+            if min <= current_engagement_rate <= max :
                 list.append(get_cell_value_from_index(i, 1))
     return list
 
@@ -74,6 +79,28 @@ def get_all_influencers() :
     return list
 
 
+def email_influencer(influencer_username, selected_template) :
+    i = get_influencer_data_by_username(influencer_username)
+    if i.contacted_by == "DM_only" or i.contacted_by == "not yet" :
+        values = [i.username, i.followers, i.engagement_rate, i.country, i.name, i.mail]
+        mail_subject = selected_template.replace_variables_in("subject", values)
+        mail_body = selected_template.replace_variables_in("body", values)
+        mail = EmailMessage()
+        mail['Subject'] = mail_subject
+        mail['From'] = SERVER_LOGIN
+        mail['To'] = i.mail
+        mail.set_content(mail_body)
+        with smtplib.SMTP('smtp-relay.sendinblue.com', 587) as smtp :
+            smtp.login(SERVER_LOGIN, SERVER_PASSWORD)
+            smtp.send_message(mail)
+        if i.contacted_by == "not yet" :
+            i.contacted_by = "mail only"
+            i.add_datas()
+        else :
+            i.contacted_by = "DM and mail"
+            i.add_datas()
+
+
 class Influencer :
     def __init__(self, datas="") :
         self.set_all_attributes(datas)
@@ -87,8 +114,11 @@ class Influencer :
             for attribute in attributes :
                 setattr(self, attribute, values)
         else :
-            for (value, attribute) in zip(values, attributes) :
-                setattr(self, attribute, value)
+            for i in range(len(attributes)) :
+                if i <= len(values) - 1 :
+                    setattr(self, attributes[i], values[i])
+                else :
+                    setattr(self, attributes[i], "")
 
     def is_in_list(self) :
         return is_in_col(self.username, 1)
@@ -99,7 +129,7 @@ class Influencer :
         if self.is_in_list() :
             influencer_datas_list = get_row_values(self.username)
             for i in range(1, len(datas_and_columns_tuples)) :
-                if i < len(influencer_datas_list) - 1 :
+                if i > len(influencer_datas_list) - 1 :
                     influencer_datas_list.append("")
                 if datas_and_columns_tuples[i][0] != influencer_datas_list[i] :
                     datas_to_add.append(datas_and_columns_tuples[i])
@@ -112,20 +142,29 @@ class Influencer :
         if datas != [] :
             datas_and_columns_tuples = self.link_datas_to_columns()
             if len(datas) != len(datas_and_columns_tuples) :
-                cell = sheet.find(self.username)
+                cell = SHEET.find(self.username)
                 row = cell.row
             else :
                 row = get_last_row() + 1
             add_to_sheet(row, datas)
 
     def link_datas_to_columns(self) :
-        data = [(self.username, 1), (self.followers, 2), (self.engagement_rate, 3),
-                (self.country, 4), (self.name, 5), (self.mail, 6), (self.contacted_by, 7),
-                (self.DM_response_time, 8), (self.email_response_time, 9),
-                (self.deal_offer, 10), (self.story_views, 11), (self.swipeup_link_clicks, 12),
-                (self.conversion_rate, 13), (self.generated_turnover, 14), (self.generated_followers, 15)]
+        data = []
+        all_datas = self.__dict__
+        keys = self.__dict__.keys()
+        i = 1
+        for key in keys :
+            data.append((all_datas.get(key), i))
+            i += 1
         return data
 
 
 if __name__ == '__main__' :
+    # ts = get_templates()
+    # for t in ts:
+    #     if t.name == "template_2":
+    #         st = t
+    # email_influencer("papiee75", st)
+    # i = get_influencer_data_by_username("papiee75")
+    # print(i.link_datas_to_columns())
     pass

@@ -1,14 +1,27 @@
+from oauth2client.service_account import ServiceAccountCredentials
+import gspread
 import os
 from pathlib import Path
 
 
-scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
+SCOPE = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
          "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 
-cred = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+CRED = ServiceAccountCredentials.from_json_keyfile_name("../../../../../../creds.json", SCOPE)
 
-client = gspread.authorize(cred)
+CLIENT = gspread.authorize(CRED)
 
-sheet = client.open("test").sheet1
+SHEET = CLIENT.open("test").sheet1
+
+SERVER_LOGIN = os.environ.get('SERVER_LOGIN')
+
+SERVER_PASSWORD = os.environ.get('SERVER_PASSWORD')
 
 SELECTIONS_DIR = os.path.join(Path.home(), ".selections")
+
+TEMPLATES_DIR = os.path.join(Path.home(), ".templates")
+
+TEMPLATES_VARIABLES = ["username", "followers", "engagement rate", "country", "name", "mail"]
+
+TEMPLATES_VARIABLES_REGEX = r'\[([^\]]+)\]'
+

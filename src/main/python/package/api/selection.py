@@ -8,7 +8,7 @@ from package.api.influencer import *
 from package.api.constants import SELECTIONS_DIR
 
 
-def get_notes() :
+def get_selections() :
     selections = []
     files = glob(os.path.join(SELECTIONS_DIR, "*.json"))
     for file in files :
@@ -21,6 +21,7 @@ def get_notes() :
             selection_countries = selection_data.get("countries")
             selection_with_email_address = selection_data.get("with_email_address")
             selection_contacted_by = selection_data.get("contacted_by")
+            selection_creation_date = selection_data.get("creation_date")
             selection_influencers = selection_data.get("influencers")
             selection = Selection(name=selection_name,
                                   uuid=selection_uuid,
@@ -29,6 +30,7 @@ def get_notes() :
                                   countries=selection_countries,
                                   with_email_address=selection_with_email_address,
                                   contacted_by=selection_contacted_by,
+                                  creation_date=selection_creation_date,
                                   influencers=selection_influencers)
             selections.append(selection)
     return selections
@@ -36,10 +38,10 @@ def get_notes() :
 
 class Selection :
     def __init__(self, name="", uuid="", followers_range=None, engagement_rate_range=None, countries=None,
-                 with_email_address=False, contacted_by=None, influencers=None) :
+                 with_email_address=False, contacted_by=None, creation_date=None, influencers=None) :
         if name == "" :
             directory_lenght = len(glob(os.path.join(SELECTIONS_DIR, "*.json")))
-            self.name = "selction_" + str(directory_lenght + 1)
+            self.name = "selection_" + str(directory_lenght + 1)
         else :
             self.name = name
         if uuid == "":
@@ -51,7 +53,10 @@ class Selection :
         self.countries = countries
         self.with_email_address = with_email_address
         self.contacted_by = contacted_by
-        self.creation_date = date.today()
+        if creation_date is None:
+            self.creation_date = date.today()
+        else:
+            self.creation_date = creation_date
         self.child = []
         self.criterias = self.get_criterias()
         if influencers is None:

@@ -1,10 +1,11 @@
 from PySide2 import QtWidgets
 
-from package.navigation_menu_frame import NavigationMenuFrame
-from package.all_pages import AllPages
+from package.influencer_page import InfluencerPage
+from package.selections_page import SelectionsPage
+from package.templates_page import TemplatesPage
 
 
-class MainWindow(QtWidgets.QWidget) :
+class AllPages(QtWidgets.QStackedWidget) :
     def __init__(self) :
         super().__init__()
         self.setup_ui()
@@ -17,18 +18,16 @@ class MainWindow(QtWidgets.QWidget) :
         self.setup_connections()
 
     def create_widgets(self) :
-        self.navigation_menu_frame = NavigationMenuFrame()
-        self.all_pages = AllPages()
+        pass
 
     def modify_widgets(self) :
         pass
 
     def create_layouts(self) :
-        self.main_layout = QtWidgets.QGridLayout(self)
+        pass
 
     def add_widgets_to_layouts(self) :
-        self.main_layout.addWidget(self.navigation_menu_frame, 0, 0, 2, 1)
-        self.main_layout.addWidget(self.all_pages, 0, 1, 2, 10)
+        pass
 
     def setup_connections(self) :
         pass

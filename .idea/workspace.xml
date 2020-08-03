@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="134de9ed-a651-4da1-a95c-b40a55fed19f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/python/package/all_pages.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/python/package/api/template.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/python/package/influencer_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/python/package/navigation_menu_frame.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/python/package/selections_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/python/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/python/package/api/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/python/package/api/creds.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/python/package/api/influencer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/influencer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/python/package/api/selection.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/selection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/python/package/api/sheet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/sheet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/python/package/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/main_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +43,12 @@
     <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/PyNotes" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.selection">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PythonProjects\PyInfluencerTool\src\main\python\package" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
     <configuration name="influencer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PyInfluencerTool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -51,10 +67,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PyInfluencerTool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/python/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="selection" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PyInfluencerTool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python/package/api" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -90,15 +130,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="template" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PyInfluencerTool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python/package/api" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/python/package/api/template.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.selection" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.influencer" />
-        <item itemvalue="Python.sheet" />
-        <item itemvalue="Python.sheet" />
+        <item itemvalue="Python.template" />
+        <item itemvalue="Python.influencer" />
+        <item itemvalue="Python.influencer" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -113,19 +176,43 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1865" y="147" key="FileChooserDialogImpl" timestamp="1595509077130">
+    <state x="1865" y="147" key="FileChooserDialogImpl" timestamp="1596464830510">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
     <state x="473" y="175" key="FileChooserDialogImpl/0.0.1366.768/-1024.0.1024.768@0.0.1366.768" timestamp="1595264785745" />
-    <state x="1865" y="147" key="FileChooserDialogImpl/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1595509077130" />
+    <state x="1865" y="147" key="FileChooserDialogImpl/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596464830510" />
+    <state width="1441" height="390" key="GridCell.Tab.0.bottom" timestamp="1596469576320">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="390" key="GridCell.Tab.0.bottom/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596469576320" />
+    <state width="1441" height="390" key="GridCell.Tab.0.center" timestamp="1596469576320">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="390" key="GridCell.Tab.0.center/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596469576320" />
+    <state width="1441" height="390" key="GridCell.Tab.0.left" timestamp="1596469576320">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="390" key="GridCell.Tab.0.left/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596469576320" />
+    <state width="1441" height="390" key="GridCell.Tab.0.right" timestamp="1596469576320">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="390" key="GridCell.Tab.0.right/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596469576320" />
     <state x="1645" y="132" key="SettingsEditor" timestamp="1595266579228">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
     <state x="1645" y="132" key="SettingsEditor/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1595266579228" />
     <state x="211" y="58" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1595252522835" />
-    <state x="1749" y="132" width="672" height="678" key="search.everywhere.popup" timestamp="1595281844039">
+    <state width="498" height="446" key="SwitcherDM" timestamp="1596302872156">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state x="1749" y="132" width="672" height="678" key="search.everywhere.popup/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1595281844039" />
+    <state width="498" height="446" key="SwitcherDM/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596302872156" />
+    <state x="1903" y="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596468975053">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state x="1903" y="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596468975053" />
+    <state x="1749" y="132" width="672" height="678" key="search.everywhere.popup" timestamp="1595659185108">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state x="1749" y="132" width="672" height="678" key="search.everywhere.popup/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1595659185108" />
   </component>
 </project>

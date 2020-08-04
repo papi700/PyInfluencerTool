@@ -18,7 +18,7 @@ class AllPages(QtWidgets.QStackedWidget) :
         self.setup_connections()
 
     def create_widgets(self) :
-        pass
+        self.influencer_page = InfluencerPage()
 
     def modify_widgets(self) :
         pass
@@ -27,7 +27,7 @@ class AllPages(QtWidgets.QStackedWidget) :
         pass
 
     def add_widgets_to_layouts(self) :
-        pass
+        self.addWidget(self.influencer_page)
 
     def setup_connections(self) :
         pass

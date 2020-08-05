@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="134de9ed-a651-4da1-a95c-b40a55fed19f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/python/package/templates_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/package/all_pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/all_pages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/package/influencer_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/influencer_page.py" afterDir="false" />
-    </list>
+    <list default="true" id="134de9ed-a651-4da1-a95c-b40a55fed19f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,27 +36,56 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ex2yXLKY6OselnhELHoDrXjwLq" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/PyNotes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PythonProjects\PyInfluencerTool\src\main\resources" />
+      <recent name="D:\PythonProjects\PyInfluencerTool\src\main\resources\base" />
       <recent name="D:\PythonProjects\PyInfluencerTool\src\main\python\package" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
+    <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PyInfluencerTool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python/package/api" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/python/package/api/constants.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="influencer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PyInfluencerTool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python/package/api" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -74,27 +115,6 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/python/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="selection" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="PyInfluencerTool" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python/package/api" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/python/package/api/selection.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
@@ -146,9 +166,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.constants" />
         <item itemvalue="Python.influencer" />
         <item itemvalue="Python.template" />
-        <item itemvalue="Python.influencer" />
         <item itemvalue="Python.influencer" />
       </list>
     </recent_temporary>
@@ -172,39 +192,95 @@
       <option name="project" value="LOCAL" />
       <updated>1596469897138</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Creation of the front-end part of the influencer_page.py">
+      <created>1596561743383</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1596561743383</updated>
+    </task>
+    <task id="LOCAL-00003" summary=" influencer_page.py last lines">
+      <created>1596643834395</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1596643834396</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="Creation of the front-end part of the influencer_page.py" />
+    <MESSAGE value=" influencer_page.py last lines" />
+    <option name="LAST_COMMIT_MESSAGE" value=" influencer_page.py last lines" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1713" y="-40" key="CommitChangelistDialog2" timestamp="1596469894923">
-      <screen x="1366" y="-58" width="1440" height="900" />
+    <state x="329" y="0" key="CommitChangelistDialog2" timestamp="1596643832867">
+      <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="1713" y="-40" key="CommitChangelistDialog2/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596469894923" />
-    <state x="1865" y="147" key="FileChooserDialogImpl" timestamp="1596464830510">
+    <state x="329" y="0" key="CommitChangelistDialog2/0.0.1366.768/1366.-58.1440.900@0.0.1366.768" timestamp="1596643832867" />
+    <state x="1713" y="-40" key="CommitChangelistDialog2/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596561741769" />
+    <state x="1865" y="147" key="FileChooserDialogImpl" timestamp="1598020113085">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
     <state x="473" y="175" key="FileChooserDialogImpl/0.0.1366.768/-1024.0.1024.768@0.0.1366.768" timestamp="1595264785745" />
-    <state x="1865" y="147" key="FileChooserDialogImpl/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596464830510" />
-    <state width="1441" height="390" key="GridCell.Tab.0.bottom" timestamp="1596561517207">
+    <state x="1865" y="147" key="FileChooserDialogImpl/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598020113085" />
+    <state width="1441" height="171" key="GridCell.Tab.0.bottom" timestamp="1596888640125">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="390" key="GridCell.Tab.0.bottom/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596561517207" />
-    <state width="1441" height="390" key="GridCell.Tab.0.center" timestamp="1596561517207">
+    <state width="1441" height="171" key="GridCell.Tab.0.bottom/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596888640125" />
+    <state width="1367" height="171" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1596632840314" />
+    <state width="1441" height="171" key="GridCell.Tab.0.center" timestamp="1596888640125">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="390" key="GridCell.Tab.0.center/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596561517207" />
-    <state width="1441" height="390" key="GridCell.Tab.0.left" timestamp="1596561517207">
+    <state width="1441" height="171" key="GridCell.Tab.0.center/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596888640125" />
+    <state width="1367" height="171" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1596632840314" />
+    <state width="1441" height="171" key="GridCell.Tab.0.left" timestamp="1596888640125">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="390" key="GridCell.Tab.0.left/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596561517207" />
-    <state width="1441" height="390" key="GridCell.Tab.0.right" timestamp="1596561517207">
+    <state width="1441" height="171" key="GridCell.Tab.0.left/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596888640125" />
+    <state width="1367" height="171" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1596632840314" />
+    <state width="1441" height="171" key="GridCell.Tab.0.right" timestamp="1596888640125">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="390" key="GridCell.Tab.0.right/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596561517207" />
+    <state width="1441" height="171" key="GridCell.Tab.0.right/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596888640125" />
+    <state width="1367" height="171" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1596632840314" />
+    <state width="1441" height="308" key="GridCell.Tab.1.bottom" timestamp="1596577883261">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="308" key="GridCell.Tab.1.bottom/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596577883261" />
+    <state width="1441" height="308" key="GridCell.Tab.1.center" timestamp="1596577883261">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="308" key="GridCell.Tab.1.center/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596577883261" />
+    <state width="1441" height="308" key="GridCell.Tab.1.left" timestamp="1596577883261">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="308" key="GridCell.Tab.1.left/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596577883261" />
+    <state width="1441" height="308" key="GridCell.Tab.1.right" timestamp="1596577883261">
+      <screen x="1366" y="-58" width="1440" height="900" />
+    </state>
+    <state width="1441" height="308" key="GridCell.Tab.1.right/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596577883261" />
     <state x="1645" y="132" key="SettingsEditor" timestamp="1595266579228">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
@@ -214,14 +290,15 @@
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596302872156" />
-    <state x="1678" y="125" key="Vcs.Push.Dialog.v2" timestamp="1596469919509">
+    <state x="1678" y="125" key="Vcs.Push.Dialog.v2" timestamp="1598023196509">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state x="1678" y="125" key="Vcs.Push.Dialog.v2/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596469919509" />
-    <state x="1903" y="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596561649930">
+    <state x="296" y="156" key="Vcs.Push.Dialog.v2/0.0.1366.768/1366.-58.1440.900@0.0.1366.768" timestamp="1596643842938" />
+    <state x="1678" y="125" key="Vcs.Push.Dialog.v2/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598023196509" />
+    <state x="1903" y="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1598019297266">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state x="1903" y="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1596561649930" />
+    <state x="1903" y="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598019297266" />
     <state x="1749" y="132" width="672" height="678" key="search.everywhere.popup" timestamp="1595659185108">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>

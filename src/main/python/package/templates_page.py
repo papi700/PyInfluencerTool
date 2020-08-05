@@ -2,8 +2,9 @@ from PySide2 import QtWidgets
 
 
 class TemplatesPage(QtWidgets.QWidget) :
-    def __init__(self) :
+    def __init__(self, ctx) :
         super().__init__()
+        self.ctx = ctx
         self.setup_ui()
 
     def setup_ui(self):
@@ -17,7 +18,9 @@ class TemplatesPage(QtWidgets.QWidget) :
         pass
 
     def modify_widgets(self):
-        pass
+        css_file = self.ctx.get_resource("templates_page.css")
+        with open(css_file, "r") as f :
+            self.setStyleSheet(f.read())
 
     def create_layouts(self):
         pass

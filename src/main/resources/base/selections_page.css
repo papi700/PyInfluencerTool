@@ -1,0 +1,17 @@
+QTabBar::tab{
+    height: 30px;
+    width:  200px;
+    border: 1px solid #001b28;
+    background: #001b28;
+    color: rgb(80, 127, 230);
+    font-size: 15px;
+}
+
+QTabWidget::pane {
+    border: 0px solid #001b28;
+    color: #001b28;
+}
+
+QWidget {
+    background-color: #00293d;
+}

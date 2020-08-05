@@ -2,8 +2,9 @@ from PySide2 import QtWidgets
 
 
 class NavigationMenuFrame(QtWidgets.QFrame) :
-    def __init__(self) :
+    def __init__(self, ctx) :
         super().__init__()
+        self.ctx = ctx
         self.setup_ui()
 
     def setup_ui(self):
@@ -11,7 +12,6 @@ class NavigationMenuFrame(QtWidgets.QFrame) :
         self.modify_widgets()
         self.create_layouts()
         self.add_widgets_to_layouts()
-        self.setup_connections()
 
     def create_widgets(self):
         self.influencer_page_btn = QtWidgets.QPushButton("Influencer")
@@ -19,15 +19,18 @@ class NavigationMenuFrame(QtWidgets.QFrame) :
         self.templates_page_btn = QtWidgets.QPushButton("Templates")
 
     def modify_widgets(self):
-        pass
+        css_file = self.ctx.get_resource("navigation_menu_frame.css")
+        with open(css_file, "r") as f :
+            self.setStyleSheet(f.read())
 
     def create_layouts(self):
         self.main_layout = QtWidgets.QGridLayout(self)
+        self.main_layout.setMargin(0)
+        self.main_layout.setSpacing(0)
 
     def add_widgets_to_layouts(self):
-        self.main_layout.addWidget(self.influencer_page_btn, 0, 0, 1, 2)
-        self.main_layout.addWidget(self.selections_page_btn, 1, 0, 1, 2)
-        self.main_layout.addWidget(self.templates_page_btn, 2, 0, 1, 2)
+        self.main_layout.addWidget(self.influencer_page_btn)
+        self.main_layout.addWidget(self.selections_page_btn)
+        self.main_layout.addWidget(self.templates_page_btn)
 
-    def setup_connections(self):
-        pass
+

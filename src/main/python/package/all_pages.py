@@ -6,8 +6,11 @@ from package.templates_page import TemplatesPage
 
 
 class AllPages(QtWidgets.QStackedWidget) :
-    def __init__(self) :
+    def __init__(self, ctx, width=0, height=0) :
         super().__init__()
+        self.ctx = ctx
+        self.w = width
+        self.h = height
         self.setup_ui()
 
     def setup_ui(self) :
@@ -18,7 +21,9 @@ class AllPages(QtWidgets.QStackedWidget) :
         self.setup_connections()
 
     def create_widgets(self) :
-        self.influencer_page = InfluencerPage()
+        self.influencer_page = InfluencerPage(ctx=self.ctx)
+        self.selections_page = SelectionsPage(ctx=self.ctx, width=self.w, height=self.h)
+        self.templates_page = TemplatesPage(ctx=self.ctx)
 
     def modify_widgets(self) :
         pass
@@ -28,6 +33,12 @@ class AllPages(QtWidgets.QStackedWidget) :
 
     def add_widgets_to_layouts(self) :
         self.addWidget(self.influencer_page)
+        self.addWidget(self.selections_page)
+        self.addWidget(self.templates_page)
 
     def setup_connections(self) :
         pass
+
+    # END UI
+
+

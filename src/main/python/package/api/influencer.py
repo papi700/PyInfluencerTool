@@ -40,6 +40,10 @@ def get_influencers_by_engagement_rate(min, max) :
 def get_available_countries() :
     available_countries = get_col_values("COUNTRY")
     available_countries.remove("COUNTRY")
+    available_countries = list(filter(None, available_countries))
+    for country in available_countries:
+        if available_countries.count(country) > 1:
+            available_countries.remove(country)
     return available_countries
 
 
@@ -101,6 +105,10 @@ def email_influencer(influencer_username, selected_template) :
             i.add_datas()
 
 
+class EmailError(Exception):
+    pass
+
+
 class Influencer :
     def __init__(self, datas="") :
         self.set_all_attributes(datas)
@@ -129,24 +137,40 @@ class Influencer :
         if self.is_in_list() :
             influencer_datas_list = get_row_values(self.username)
             for i in range(1, len(datas_and_columns_tuples)) :
+                value = datas_and_columns_tuples[i][0]
                 if i > len(influencer_datas_list) - 1 :
                     influencer_datas_list.append("")
-                if datas_and_columns_tuples[i][0] != influencer_datas_list[i] :
-                    datas_to_add.append(datas_and_columns_tuples[i])
+                data = influencer_datas_list[i]
+                if not value in ("", data):
+                    for data_and_column in datas_and_columns_tuples:
+                        if value in data_and_column:
+                            column = data_and_column[0]
+                    if "%" in value and float(value.replace("%", "")) != float(data.replace("%", "")):
+                        datas_to_add.append((column, value))
+                    elif not "%" in value:
+                        datas_to_add.append((column, value))
             return datas_to_add
         else :
-            return datas_and_columns_tuples
+            if self.mail != "" and is_in_col(self.mail, 6):
+                raise EmailError
+                # print("is in")
+            else:
+                return datas_and_columns_tuples
 
     def add_datas(self) :
         datas = self.get_datas_to_add()
-        if datas != [] :
+        if datas != []:
             datas_and_columns_tuples = self.link_datas_to_columns()
             if len(datas) != len(datas_and_columns_tuples) :
                 cell = SHEET.find(self.username)
+                print(self.username)
                 row = cell.row
             else :
                 row = get_last_row() + 1
             add_to_sheet(row, datas)
+            return True
+        else:
+            return None
 
     def link_datas_to_columns(self) :
         data = []
@@ -154,7 +178,7 @@ class Influencer :
         keys = self.__dict__.keys()
         i = 1
         for key in keys :
-            data.append((all_datas.get(key), i))
+            data.append((i, all_datas.get(key)))
             i += 1
         return data
 

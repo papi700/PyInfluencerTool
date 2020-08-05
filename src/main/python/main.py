@@ -6,10 +6,10 @@ from package.main_window import MainWindow
 
 if __name__ == '__main__' :
     appctxt = ApplicationContext()  # 1. Instantiate ApplicationContext
-    window = MainWindow()
-    desktop_widget = QDesktopWidget()
-    size = QDesktopWidget.screenGeometry(desktop_widget)
-    window.resize(size.width(), size.height())
-    window.show()
+    window = MainWindow(ctx=appctxt)
+    # desktop_widget = QDesktopWidget()
+    # size = QDesktopWidget.screenGeometry(desktop_widget)
+    # window.resize(size.width(), size.height())
+    window.showMaximized()
     exit_code = appctxt.app.exec_()  # 2. Invoke appctxt.app.exec_()
     sys.exit(exit_code)

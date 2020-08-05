@@ -1,6 +1,9 @@
 import gspread
 
-from package.api.constants import SCOPE, CRED, CLIENT, SHEET
+try:
+    from package.api.constants import SCOPE, CRED, CLIENT, SHEET
+except:
+    pass
 
 
 def get_col_values(string) :
@@ -22,43 +25,42 @@ def get_last_row() :
     return len(SHEET.get_all_values())
 
 
-def getCellRange(start, end='') :
+def get_cell_name(value) :
     cols_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G',
                   'H', 'I', 'J', 'K', 'L', 'M', 'N',
                   'O', 'P', 'Q', 'R', 'S', 'T', 'U',
                   'V', 'W', 'X', 'Y', 'Z']
 
-    start_cell_name = ''
-    end_cell_name = ''
-    start_cell = SHEET.find(start)
-    if end != '' :
-        end_cell = SHEET.find(end)
-    for i in range(1, 26) :
-        if i == start_cell.col :
-            start_cell_name = cols_names[i - 1] + str(start_cell.row)
-        if end != '' and i == end_cell.col :
-            end_cell_name = cols_names[i - 1] + str(start_cell.row)
-    if end == '' :
-        return start_cell_name
-    else :
-        cell_range = start_cell_name + ':' + end_cell_name
-        return cell_range
+    try :
+        cell = SHEET.find(value)
+        for i in range(1, 26) :
+            if i == cell.col :
+                cell_name = cols_names[i - 1] + str(cell.row)
+        return cell_name
+    except :
+        pass
 
 
 def add_to_sheet(row, data) :
     if len(data) == 1 :
-        SHEET.update_cell(row, data[0][1], data[0][0])
-        cell = getCellRange(data[0][0])
-        SHEET.format(cell, {'wrapStrategy' : "WRAP"})
+        SHEET.update_cell(row, data[0][0], data[0][1])
+        cell_name = get_cell_name(data[0][0])
+        try :
+            SHEET.format(cell_name, {'wrapStrategy' : "WRAP"})
+        except :
+            pass
     else :
         for i in range(len(data)) :
-            SHEET.update_cell(row, data[i][1], data[i][0])
-        cell_range = getCellRange(data[0][0], data[len(data) - 1][0])
-        SHEET.format(cell_range, {'wrapStrategy' : "WRAP"})
+            SHEET.update_cell(row, data[i][0], data[i][1])
+            cell_name = get_cell_name(data[i][0])
+            try :
+                SHEET.format(cell_name, {'wrapStrategy' : "WRAP"})
+            except :
+                pass
 
 
 def is_in_col(string, col) :
-    values = SHEET.col_values(1)
+    values = SHEET.col_values(col)
     for i in range(len(values)) :
         if values[i] == string :
             return True
@@ -108,5 +110,3 @@ def get_cell_value_from_index(current_index, col) :
     row = current_index + 1
     value = SHEET.cell(row, col).value
     return value
-
-

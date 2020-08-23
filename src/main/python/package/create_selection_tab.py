@@ -1,8 +1,11 @@
 from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 
+import re
+
 try :
     from package.api.influencer import get_available_countries
+    from package.api.sheet import in_int
 except :
     pass
 
@@ -49,7 +52,6 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.first_line = QtWidgets.QFrame()
         self.first_line.setFrameShape(QtWidgets.QFrame.VLine)
         self.first_line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        # self.first_line.setObjectName("first_line")
 
         # FOR ENGAGEMENT RATE
 
@@ -139,7 +141,7 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         # NUMBER OF INFLUENCERS LABEL
 
         self.influencers_number = 0
-        self.influencers_number_label = QtWidgets.QLabel(f"Selection influencers number: {str(self.influencers_number)}")
+        self.influencers_number_label = QtWidgets.QLabel(f"Selected influencers: {str(self.influencers_number)}")
         self.influencers_number_label.setFrameShape(QtWidgets.QFrame.Box)
         self.influencers_number_label.setObjectName("influencers_number_label")
 
@@ -164,7 +166,6 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.last_layout = QtWidgets.QHBoxLayout()
         self.main_layout = QtWidgets.QVBoxLayout(self)
         self.main_layout.addLayout(self.first_layout)
-        # self.main_layout.addLayout(self.second_layout)
 
     def add_widgets_to_layouts(self) :
         self.followers_layout.addWidget(self.followers_label)
@@ -204,6 +205,50 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.main_layout.addLayout(self.last_layout)
 
     def setup_connections(self) :
-        pass
+        self.validation_btn.clicked.connect(self.check_QLineEdit)
 
     # END UI
+
+    def check_QLineEdit(self) :
+        min_followers_match = re.match(r"^\d+(\.\d+)?[kKmM]{1}$", self.min_followers_entry.text())
+        max_followers_match = re.match(r"^\d+(\.\d+)?[kKmM]{1}$", self.max_followers_entry.text())
+        min_engagement_rate_match = re.match(r"^\d+(\.\d+)?%?$", self.min_engagement_rate_entry.text())
+        max_engagement_rate_match = re.match(r"^\d+(\.\d+)?%?$", self.max_engagement_rate_entry.text())
+        regex = False
+        check = False
+        self.message_box = QtWidgets.QMessageBox()
+        if self.min_followers_entry.text() != "5k" and not min_followers_match :
+            self.message_box.setText("Please enter a valid minimum followers number eg. 2.1k")
+            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
+        elif self.max_followers_entry.text() != "200m" and not max_followers_match :
+            self.message_box.setText("Please enter a valid maximum followers number eg. 2.1k")
+            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
+        elif self.min_engagement_rate_entry.text() != "0%" and not min_engagement_rate_match :
+            self.message_box.setText("Please enter a valid minimum engament rate eg. 2.1% or 2.1")
+            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
+        elif self.max_engagement_rate_entry.text() != "100%" and not max_engagement_rate_match :
+            self.message_box.setText("Please enter a valid maximum engament rate eg. 2.1% or 2.1")
+            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
+        else :
+            regex = True
+        if regex :
+            min_followers = self.min_followers_entry.text()
+            max_followers = self.max_followers_entry.text()
+            if "%" in self.min_engagement_rate_entry.text() :
+                min_engagement = self.min_engagement_rate_entry.text().replace("%", "")
+            else :
+                min_engagement = self.min_engagement_rate_entry.text()
+            if "%" in self.max_engagement_rate_entry.text() :
+                max_engagement = self.max_engagement_rate_entry.text().replace("%", "")
+            else :
+                max_engagement = self.max_engagement_rate_entry.text()
+            if in_int(min_followers) >= in_int(max_followers) :
+                self.message_box.setText("The minimum followers number should be always smaller than the maximum")
+            elif float(min_engagement) >= float(max_engagement) :
+                self.message_box.setText("The minimum engagement rate should be always smaller than the maximum")
+            else :
+                check = True
+        if check :
+            return True
+        else:
+            self.message_box.exec_()

@@ -86,7 +86,7 @@ class InfluencerPage(QtWidgets.QWidget) :
             datas = []
             permission = None
             followers_match = re.match(r"^\d+(\.\d+)?[kKmM]{1}$", self.entries[1].text())
-            engagement_rate_match = re.match(r"^\d+(\.\d+)?%?", self.entries[2].text())
+            engagement_rate_match = re.match(r"^\d+(\.\d+)?%?$", self.entries[2].text())
             country_match = re.match(r"(^[A-Z]{2,}-?\s?[a-z]?\s?)", self.entries[3].text())
             name_match = re.match(r"(^[A-Z]{1}([A-Z]{1,})?[a-z]+\s?)", self.entries[4].text())
             email_match = re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", self.entries[5].text())
@@ -98,7 +98,7 @@ class InfluencerPage(QtWidgets.QWidget) :
             elif self.entries[2].text() != "" and not engagement_rate_match :
                 permission = False
                 self.entries[2].setStyleSheet("color: red;")
-                self.message_box.setText("Please enter a valid engament rate number eg. 2.1% or 2.1")
+                self.message_box.setText("Please enter a valid engament rate eg. 2.1% or 2.1")
                 self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
             elif self.entries[2].text() != "" and engagement_rate_match and not "%" in self.entries[2].text() :
                 self.entries[2].setText(self.entries[2].text() + "%")

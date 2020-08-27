@@ -44,24 +44,24 @@ class Selection :
             self.name = "selection_" + str(directory_lenght + 1)
         else :
             self.name = name
-        if uuid == "":
+        if uuid == "" :
             self.uuid = str(uuid4())
-        else:
+        else :
             self.uuid = uuid
         self.followers_range = followers_range
         self.engagment_rate_range = engagement_rate_range
         self.countries = countries
         self.with_email_address = with_email_address
         self.contacted_by = contacted_by
-        if creation_date is None:
+        if creation_date is None :
             self.creation_date = date.today()
-        else:
+        else :
             self.creation_date = creation_date
         self.child = []
         self.criterias = self.get_criterias()
-        if influencers is None:
+        if influencers is None :
             self.influencers = self.get_matching_influencers()
-        else:
+        else :
             self.influencers = influencers
         self.lenght = len(self.influencers)
 
@@ -87,18 +87,24 @@ class Selection :
         elif criteria == self.with_email_address :
             return get_influencers_with_email_address()
         elif criteria == self.contacted_by :
-            get_influencers_contacted_by(criteria)
+            influencers = []
+            if isinstance(self.contacted_by, tuple) :
+                for mean in self.contacted_by :
+                    influencers += get_influencers_contacted_by(mean)
+            else :
+                influencers = get_influencers_contacted_by(self.contacted_by)
+            return influencers
 
     def get_matching_influencers(self) :
-        list = []
+        final_list = []
         list_of_lists = []
         criterias = self.get_criterias()
         for criteria in criterias :
             list_of_lists += self.call_right_function(criteria)
         for influencer in list_of_lists :
-            if list_of_lists.count(influencer) == len(criterias) and influencer not in list :
-                list.append(influencer)
-        return list
+            if list_of_lists.count(influencer) == len(criterias) and influencer not in final_list :
+                final_list.append(influencer)
+        return final_list
 
     def is_matching_criterias(self, influencer) :
         list = self.get_matching_influencers()

@@ -2,12 +2,11 @@ import re
 from PySide2 import QtWidgets
 import google.auth.exceptions
 
-try:
+try :
     from package.api.influencer import EmailError
-except:
+    from package.api.selection import get_selections
+except :
     pass
-
-from package.api.selection import get_selections
 
 
 class InfluencerPage(QtWidgets.QWidget) :
@@ -124,7 +123,7 @@ class InfluencerPage(QtWidgets.QWidget) :
                 self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
             else :
                 permission = True
-                for entry in self.entries:
+                for entry in self.entries :
                     entry.setStyleSheet("color: rgb(80, 127, 230)")
             for data in self.entries :
                 if permission :
@@ -137,7 +136,7 @@ class InfluencerPage(QtWidgets.QWidget) :
                     from package.api.influencer import Influencer
                     i = Influencer(datas)
                     result = i.add_datas()
-                    for selection in get_selections():
+                    for selection in get_selections() :
                         selection.update(i)
                     if result :
                         self.message_box.setText("The datas have been added to the spreadsheet")

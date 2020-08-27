@@ -11,7 +11,12 @@ QFrame[frameShape="NoFrame"]{
     margin-bottom: 50px;
 }
 
-#followers_frame, #countries_frame{
+#followers_frame{
+    min-width: 340px;
+    margin-left: 260px;
+}
+
+#countries_frame{
     margin-left: 300px;
 }
 
@@ -35,6 +40,10 @@ QFrame[frameShape="NoFrame"]{
     border: 0px;
     color: rgb(80, 127, 230);
     font-size: 20px;
+}
+
+#followers_label, #engagement_rate_label{
+    margin-left: 20px;
 }
 
 #with_email_address_label{
@@ -72,12 +81,11 @@ QCheckBox::indicator:unchecked{
 }
 
 QLabel{
-    margin-left: 20px;
     width: 20px;
     height: 26px;
     border: 0px;
     color: rgb(80, 127, 230);
-    font-size: 20px;
+    font-size: 15px;
 }
 
 QLineEdit {
@@ -176,12 +184,29 @@ QScrollArea {
     min-height: 32px;
 }
 
-#influencers_number_label {
+#influencers_count_label {
     width: 300px;
     margin-left: 300px;
     color: rgb(80, 127, 230);
     font-size: 17px;
 }
+
+
+
+QSlider::handle:horizontal {
+    background-color: #507fe6;
+    border: 0px solid;
+    border-radius: 5px;
+    margin: -15px 0px;
+    }
+#followers_slider_frame, #engagement_rate_slider_frame{
+    min-height: 200px;
+}
+
+#followers_slider_frame{
+   margin-left: 40px;
+}
+
 
 
 

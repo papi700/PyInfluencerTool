@@ -1,13 +1,26 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Qt
 
-import re
-
 try :
-    from package.api.influencer import get_available_countries
-    from package.api.sheet import in_int
+    from package.api.influencer import get_available_countries, get_all_influencers
+    from package.api.selection import Selection
 except :
     pass
+
+
+class Worker(QtCore.QObject) :
+    def __init__(self, followers_range, rate_range, countries, with_email_address, contacted_by) :
+        super().__init__()
+
+    def get_selection(self, name) :
+        self.selection_name = name
+        self.selection = Selection(name=self.selection_name, followers_range=followers_range,
+                                   engagement_rate_range=rate_range, countries=countries,
+                                   with_email_address=with_email_address,
+                                   contacted_by=contacted_by)
+
+    def get_number_of_selected_influencers(self) :
+        return self.selection.lenght
 
 
 class CreateSelectionTab(QtWidgets.QWidget) :
@@ -31,23 +44,31 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.followers_label.setObjectName("followers_label")
         self.followers_label.setFrameShape(QtWidgets.QFrame.Box)
 
-        self.min_followers_frame = QtWidgets.QFrame()
+        self.followers_slider_frame = QtWidgets.QFrame()
+        self.followers_slider_frame.setObjectName("followers_slider_frame")
 
-        self.max_followers_frame = QtWidgets.QFrame()
+        self.min_followers_slider = QtWidgets.QSlider(Qt.Horizontal, parent=self.followers_slider_frame)
+        self.min_followers_slider.setGeometry(0, 0, 120, 26)
+        self.min_followers_slider.setMinimum(5)
+        self.min_followers_slider.setMaximum(200)
+        self.min_followers_slider.setValue(5)
 
-        self.min_followers_label = QtWidgets.QLabel("Min", parent=self.min_followers_frame)
-        self.min_followers_label.setGeometry(0, 0, 70, 26)
+        self.max_followers_slider = QtWidgets.QSlider(Qt.Horizontal, parent=self.followers_slider_frame)
+        self.max_followers_slider.setGeometry(150, 0, 120, 26)
+        self.max_followers_slider.setMinimum(5)
+        self.max_followers_slider.setMaximum(200)
+        self.max_followers_slider.setValue(200)
+        self.max_followers_slider.setObjectName("max_followers_slider")
+
+        self.min_followers = "5"
+        self.min_followers_label = QtWidgets.QLabel(f"Min: {self.min_followers}k", parent=self.followers_slider_frame)
+        self.min_followers_label.setGeometry(0, 30, 90, 26)
         self.min_followers_label.setFrameShape(QtWidgets.QFrame.Box)
 
-        self.min_followers_entry = QtWidgets.QLineEdit("5K", parent=self.min_followers_frame)
-        self.min_followers_entry.setGeometry(80, 0, 180, 35)
-
-        self.max_followers_label = QtWidgets.QLabel("Max", parent=self.max_followers_frame)
-        self.max_followers_label.setGeometry(0, 0, 70, 26)
+        self.max_followers = "200"
+        self.max_followers_label = QtWidgets.QLabel(f"Max: {self.max_followers}k", parent=self.followers_slider_frame)
+        self.max_followers_label.setGeometry(210, 30, 90, 26)
         self.max_followers_label.setFrameShape(QtWidgets.QFrame.Box)
-
-        self.max_followers_entry = QtWidgets.QLineEdit("200m", parent=self.max_followers_frame)
-        self.max_followers_entry.setGeometry(80, 0, 180, 35)
 
         self.first_line = QtWidgets.QFrame()
         self.first_line.setFrameShape(QtWidgets.QFrame.VLine)
@@ -62,23 +83,33 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.engagement_rate_label.setObjectName("engagement_rate_label")
         self.engagement_rate_label.setFrameShape(QtWidgets.QFrame.Box)
 
-        self.min_engagement_rate_frame = QtWidgets.QFrame()
+        self.engagement_rate_slider_frame = QtWidgets.QFrame()
+        self.engagement_rate_slider_frame.setObjectName("engagement_rate_slider_frame")
 
-        self.max_engagement_rate_frame = QtWidgets.QFrame()
+        self.min_engagement_rate_slider = QtWidgets.QSlider(Qt.Horizontal, parent=self.engagement_rate_slider_frame)
+        self.min_engagement_rate_slider.setGeometry(0, 0, 120, 26)
+        self.min_engagement_rate_slider.setMinimum(1)
+        self.min_engagement_rate_slider.setMaximum(100)
+        self.min_engagement_rate_slider.setValue(1)
 
-        self.min_engagement_rate_label = QtWidgets.QLabel("Min", parent=self.min_engagement_rate_frame)
-        self.min_engagement_rate_label.setGeometry(0, 0, 70, 26)
+        self.max_engagement_rate_slider = QtWidgets.QSlider(Qt.Horizontal, parent=self.engagement_rate_slider_frame)
+        self.max_engagement_rate_slider.setGeometry(150, 0, 120, 26)
+        self.max_engagement_rate_slider.setMinimum(1)
+        self.max_engagement_rate_slider.setMaximum(100)
+        self.max_engagement_rate_slider.setValue(100)
+
+        self.min_engagement_rate = "1"
+        self.min_engagement_rate_label = QtWidgets.QLabel(f"Min: {self.min_engagement_rate}%",
+                                                          parent=self.engagement_rate_slider_frame)
+        self.min_engagement_rate_label.setGeometry(0, 30, 90, 26)
+        self.min_engagement_rate_label.setFrameShape(QtWidgets.QFrame.Box)
         self.min_engagement_rate_label.setFrameShape(QtWidgets.QFrame.Box)
 
-        self.min_engagement_rate_entry = QtWidgets.QLineEdit("0%", parent=self.min_engagement_rate_frame)
-        self.min_engagement_rate_entry.setGeometry(80, 0, 180, 35)
-
-        self.max_engagement_rate_label = QtWidgets.QLabel("Max", parent=self.max_engagement_rate_frame)
-        self.max_engagement_rate_label.setGeometry(0, 0, 70, 26)
+        self.max_engagement_rate = "100"
+        self.max_engagement_rate_label = QtWidgets.QLabel(f"Max: {self.max_engagement_rate}%",
+                                                          parent=self.engagement_rate_slider_frame)
+        self.max_engagement_rate_label.setGeometry(210, 30, 90, 26)
         self.max_engagement_rate_label.setFrameShape(QtWidgets.QFrame.Box)
-
-        self.max_engagement_rate_entry = QtWidgets.QLineEdit("100%", parent=self.max_engagement_rate_frame)
-        self.max_engagement_rate_entry.setGeometry(80, 0, 180, 35)
 
         self.second_line = QtWidgets.QFrame()
         self.second_line.setFrameShape(QtWidgets.QFrame.HLine)
@@ -95,10 +126,16 @@ class CreateSelectionTab(QtWidgets.QWidget) :
 
         self.available_countries = QtWidgets.QListWidget()
 
-        for country in get_available_countries() :
-            item = QtWidgets.QListWidgetItem(country)
-            item.setCheckState(Qt.Unchecked)
-            self.available_countries.addItem(item)
+        item = QtWidgets.QListWidgetItem("All")
+        item.setCheckState(Qt.Checked)
+        self.available_countries.addItem(item)
+        try :
+            for country in get_available_countries() :
+                item = QtWidgets.QListWidgetItem(country)
+                item.setCheckState(Qt.Unchecked)
+                self.available_countries.addItem(item)
+        except :
+            pass
 
         self.third_line = QtWidgets.QFrame()
         self.third_line.setFrameShape(QtWidgets.QFrame.VLine)
@@ -109,11 +146,10 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.with_email_address_frame = QtWidgets.QFrame()
         self.with_email_address_frame.setObjectName("with_email_address_frame")
 
-        self.with_email_adress_label = QtWidgets.QLabel("With email address")
+        self.with_email_adress_label = QtWidgets.QLabel("With email address only")
         self.with_email_adress_label.setObjectName("with_email_address_label")
 
-        self.yes_radio_btn = QtWidgets.QRadioButton("Yes")
-        self.no_radio_btn = QtWidgets.QRadioButton("No")
+        self.yes_check_box = QtWidgets.QCheckBox("Yes")
 
         self.fourth_line = QtWidgets.QFrame()
         self.fourth_line.setFrameShape(QtWidgets.QFrame.HLine)
@@ -128,10 +164,13 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.contacted_by_label.setObjectName("contacted_by_label")
 
         self.not_yet_checkbox = QtWidgets.QCheckBox("Not yet")
+        self.not_yet_checkbox.setCheckState(Qt.Checked)
 
         self.dm_checkbox = QtWidgets.QCheckBox("DM")
+        self.dm_checkbox.setCheckState(Qt.Checked)
 
         self.email_checkbox = QtWidgets.QCheckBox("Email")
+        self.email_checkbox.setCheckState(Qt.Checked)
 
         # VALIDATION BUTTON
 
@@ -139,11 +178,14 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.validation_btn.setObjectName("validation_btn")
 
         # NUMBER OF INFLUENCERS LABEL
-
-        self.influencers_number = 0
-        self.influencers_number_label = QtWidgets.QLabel(f"Selected influencers: {str(self.influencers_number)}")
-        self.influencers_number_label.setFrameShape(QtWidgets.QFrame.Box)
-        self.influencers_number_label.setObjectName("influencers_number_label")
+        try :
+            self.influencers_count = len(get_all_influencers())
+            self.influencers_count_label = QtWidgets.QLabel(
+                f"Selected influencers count: {str(self.influencers_count)}")
+            self.influencers_count_label.setFrameShape(QtWidgets.QFrame.Box)
+            self.influencers_count_label.setObjectName("influencers_count_label")
+        except :
+            pass
 
     def modify_widgets(self) :
         css_file = self.ctx.get_resource("create_selection_tab.css")
@@ -169,13 +211,11 @@ class CreateSelectionTab(QtWidgets.QWidget) :
 
     def add_widgets_to_layouts(self) :
         self.followers_layout.addWidget(self.followers_label)
-        self.followers_layout.addWidget(self.min_followers_frame)
-        self.followers_layout.addWidget(self.max_followers_frame)
+        self.followers_layout.addWidget(self.followers_slider_frame)
         self.first_layout.addWidget(self.followers_frame)
         self.first_layout.addWidget(self.first_line)
         self.engagement_rate_layout.addWidget(self.engagement_rate_label)
-        self.engagement_rate_layout.addWidget(self.min_engagement_rate_frame)
-        self.engagement_rate_layout.addWidget(self.max_engagement_rate_frame)
+        self.engagement_rate_layout.addWidget(self.engagement_rate_slider_frame)
         self.first_layout.addWidget(self.engagement_rate_frame)
 
         self.main_layout.addWidget(self.second_line)
@@ -185,8 +225,7 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.second_layout.addWidget(self.countries_frame)
         self.second_layout.addWidget(self.third_line)
         self.with_email_adress_layout.addWidget(self.with_email_adress_label)
-        self.with_email_adress_layout.addWidget(self.yes_radio_btn)
-        self.with_email_adress_layout.addWidget(self.no_radio_btn)
+        self.with_email_adress_layout.addWidget(self.yes_check_box)
         self.second_layout.addWidget(self.with_email_address_frame)
         self.main_layout.addLayout(self.second_layout)
 
@@ -200,55 +239,71 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.main_layout.addLayout(self.third_layout)
 
         self.last_layout.addWidget(self.validation_btn)
-        self.last_layout.addWidget(self.influencers_number_label)
-
+        try :
+            self.last_layout.addWidget(self.influencers_count_label)
+        except :
+            pass
         self.main_layout.addLayout(self.last_layout)
 
     def setup_connections(self) :
-        self.validation_btn.clicked.connect(self.check_QLineEdit)
+        self.min_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(self.min_followers))
+        self.max_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(self.max_followers))
+        self.min_engagement_rate_slider.valueChanged.connect(
+            lambda : self.get_influencers_count(self.min_engagement_rate))
+        self.max_engagement_rate_slider.valueChanged.connect(
+            lambda : self.get_influencers_count(self.max_engagement_rate))
+        self.available_countries.itemChanged.connect(self.uncheck)
 
     # END UI
 
-    def check_QLineEdit(self) :
-        min_followers_match = re.match(r"^\d+(\.\d+)?[kKmM]{1}$", self.min_followers_entry.text())
-        max_followers_match = re.match(r"^\d+(\.\d+)?[kKmM]{1}$", self.max_followers_entry.text())
-        min_engagement_rate_match = re.match(r"^\d+(\.\d+)?%?$", self.min_engagement_rate_entry.text())
-        max_engagement_rate_match = re.match(r"^\d+(\.\d+)?%?$", self.max_engagement_rate_entry.text())
-        regex = False
-        check = False
-        self.message_box = QtWidgets.QMessageBox()
-        if self.min_followers_entry.text() != "5k" and not min_followers_match :
-            self.message_box.setText("Please enter a valid minimum followers number eg. 2.1k")
-            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
-        elif self.max_followers_entry.text() != "200m" and not max_followers_match :
-            self.message_box.setText("Please enter a valid maximum followers number eg. 2.1k")
-            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
-        elif self.min_engagement_rate_entry.text() != "0%" and not min_engagement_rate_match :
-            self.message_box.setText("Please enter a valid minimum engament rate eg. 2.1% or 2.1")
-            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
-        elif self.max_engagement_rate_entry.text() != "100%" and not max_engagement_rate_match :
-            self.message_box.setText("Please enter a valid maximum engament rate eg. 2.1% or 2.1")
-            self.message_box.setIcon(QtWidgets.QMessageBox.Critical)
-        else :
-            regex = True
-        if regex :
-            min_followers = self.min_followers_entry.text()
-            max_followers = self.max_followers_entry.text()
-            if "%" in self.min_engagement_rate_entry.text() :
-                min_engagement = self.min_engagement_rate_entry.text().replace("%", "")
-            else :
-                min_engagement = self.min_engagement_rate_entry.text()
-            if "%" in self.max_engagement_rate_entry.text() :
-                max_engagement = self.max_engagement_rate_entry.text().replace("%", "")
-            else :
-                max_engagement = self.max_engagement_rate_entry.text()
-            if in_int(min_followers) >= in_int(max_followers) :
-                self.message_box.setText("The minimum followers number should be always smaller than the maximum")
-            elif float(min_engagement) >= float(max_engagement) :
-                self.message_box.setText("The minimum engagement rate should be always smaller than the maximum")
-            else :
-                check = True
-        if check :
-            return True
+    def uncheck(self) :
+        list = self.available_countries
+        for i in range(1, len(get_available_countries()) + 1) :
+            if list.item(0).checkState() == Qt.Checked and list.item(i).checkState() == Qt.Checked :
+                list.item(0).setCheckState(Qt.Unchecked)
+
+    def get_slider_value(self, var) :
+        if var == self.min_followers:
+            slider = self.min_followers_slider
+            label = self.min_followers_label
+            text = "Min: {}k"
+        elif var == self.max_followers:
+            slider = self.max_followers_slider
+            label = self.max_followers_label
+            text = "Max: {}k"
+        elif var == self.min_engagement_rate:
+            slider = self.min_engagement_rate_slider
+            label = self.min_engagement_rate_label
+            text = "Min: {}%"
+        elif var == self.max_engagement_rate:
+            slider = self.max_engagement_rate_slider
+            label = self.max_engagement_rate_label
+            text = "Max: {}%"
+        var = slider.value()
+        text = text.format(var)
+        label.setText(text)
+        if slider == self.max_followers_slider and slider.value() < self.min_followers_slider.value():
+            self.min_followers_slider.setValue(self.max_followers_slider.value())
+        elif slider == self.max_engagement_rate_slider and slider.value() < self.min_engagement_rate_slider.value():
+            self.min_engagement_rate_slider.setValue(self.max_engagement_rate_slider.value())
+
+    def get_selected_countries(self):
+        list = []
+        if self.available_countries.item(0).checkState() == Qt.Unchecked:
+            for i in range(1, len(get_available_countries()) + 1):
+                list.append(self.available_countries.item(i).text())
         else:
-            self.message_box.exec_()
+            list = None
+        return list
+
+    def get_influencers_count(self, var) :
+        self.get_slider_value(var)
+        followers_count_range = (int(str(self.min_followers)+"000"), int(str(self.max_followers)+"000"))
+        engagement_rate_range = (float(self.min_engagement_rate), float(self.max_engagement_rate))
+        countries = self.get_selected_countries()
+        with_email = None
+        if self.yes_check_box.checkState() == Qt.Checked:
+            with_email = True
+        contacted_by
+        self.thread = QtCore.QThread()
+        # self.worker = Worker()

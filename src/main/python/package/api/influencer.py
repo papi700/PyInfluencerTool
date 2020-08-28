@@ -19,10 +19,12 @@ def get_influencers_by_followers(min, max) :
     list = []
     followers_numbers = get_col_values("FOLLOWERS")
     for i in range(len(followers_numbers)) :
-        if followers_numbers[i] != "FOLLOWERS" :
+        if followers_numbers[i] != "FOLLOWERS" and followers_numbers[i] != "":
             followers_numbers[i] = in_int(followers_numbers[i])
+            # print(min, " ", followers_numbers[i], " ", max)
             if min <= followers_numbers[i] <= max :
                 list.append(get_cell_value_from_index(i, 1))
+    # print(list)
     return list
 
 
@@ -30,7 +32,7 @@ def get_influencers_by_engagement_rate(min, max) :
     list = []
     engagement_rates = get_col_values("E.R")
     for i in range(len(engagement_rates)) :
-        if engagement_rates[i] != "E.R" :
+        if engagement_rates[i] != "E.R" and engagement_rates[i] != "":
             current_engagement_rate = float(engagement_rates[i].replace("%", ""))
             if min <= current_engagement_rate <= max :
                 list.append(get_cell_value_from_index(i, 1))

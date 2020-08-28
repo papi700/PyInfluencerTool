@@ -59,10 +59,11 @@ class Selection :
             self.creation_date = creation_date
         self.child = []
         self.criterias = self.get_criterias()
-        if influencers is None :
-            self.influencers = self.get_matching_influencers()
-        else :
+        # print(self.criterias)
+        if influencers:
             self.influencers = influencers
+        else :
+            self.influencers = self.get_matching_influencers()
         self.lenght = len(self.influencers)
 
     def get_criterias(self) :
@@ -88,7 +89,7 @@ class Selection :
             return get_influencers_with_email_address()
         elif criteria == self.contacted_by :
             influencers = []
-            if isinstance(self.contacted_by, tuple) :
+            if isinstance(self.contacted_by, list) :
                 for mean in self.contacted_by :
                     influencers += get_influencers_contacted_by(mean)
             else :

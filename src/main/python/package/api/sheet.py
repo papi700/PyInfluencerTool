@@ -1,8 +1,8 @@
 import gspread
 
-try:
+try :
     from package.api.constants import SCOPE, CRED, CLIENT, SHEET
-except:
+except :
     pass
 
 
@@ -74,10 +74,11 @@ def add_the_zeros(string, decimal_part_lenght) :
     K = which_char_in_string(["k", "K"], string)
     M = which_char_in_string(["m", "M"], string)
     zeros = ""
-    if K is not None :
+    number_of_zero_to_add = 0
+    if K :
         number_of_zero_to_add = 3 - decimal_part_lenght
         letter = K
-    elif M is not None :
+    elif M :
         number_of_zero_to_add = 6 - decimal_part_lenght
         letter = M
     for _ in range(number_of_zero_to_add) :
@@ -110,3 +111,5 @@ def get_cell_value_from_index(current_index, col) :
     row = current_index + 1
     value = SHEET.cell(row, col).value
     return value
+
+

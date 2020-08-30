@@ -311,7 +311,8 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         list = []
         if self.available_countries.item(0).checkState() == Qt.Unchecked :
             for i in range(1, len(get_available_countries()) + 1) :
-                list.append(self.available_countries.item(i).text())
+                if self.available_countries.item(i).checkState() == Qt.Checked:
+                    list.append(self.available_countries.item(i).text())
         else :
             list = None
         return list
@@ -341,14 +342,10 @@ class CreateSelectionTab(QtWidgets.QWidget) :
                 contacted_by.append("DM and mail")
         if len(contacted_by) == 4 :
             contacted_by = None
-        self.thread = QtCore.QThread()
-        self.worker = Worker(followers_count_range, engagement_rate_range,
-                             countries, with_email,
-                             contacted_by, self)
-        # self.worker.moveToThread(self.thread)
-        # self.thread.started.connect(self.worker.get_number_of_selected_influencers)
-        # self.thread.start()
-        # self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
-        # self.worker.create_selection()
-        self.worker.get_number_of_selected_influencers()
-        print(self.influencers_count)
+        self.selection = Selection(followers_range=followers_count_range,
+                                   engagement_rate_range=engagement_rate_range, countries=countries,
+                                   with_email_address=with_email,
+                                   contacted_by=contacted_by)
+        self.influencers_count = self.selection.lenght
+        self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
+

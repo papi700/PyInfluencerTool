@@ -1,41 +1,75 @@
 import gspread
+import json
 
 try :
     from package.api.constants import SCOPE, CRED, CLIENT, SHEET
 except :
     pass
 
+data_list = SHEET.get_all_records()
+
+alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G',
+            'H', 'I', 'J', 'K', 'L', 'M', 'N',
+            'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+            'V', 'W', 'X', 'Y', 'Z']
+cols_name = ["USERNAME", "FOLLOWERS", "E.R", "COUNTRY", "NAME", "MAIL", "CONTACTED BY", "1", "2", "3", "4", "5", "6"]
+
+cols_index = []
+
+for i in range(len(cols_name)) :
+    cols_index.append(i + 1)
+
 
 def get_col_values(string) :
-    cell_of_string = SHEET.find(string)
-    return SHEET.col_values(cell_of_string.col)
+    values = []
+    string_key = ""
+    if string in cols_name:
+        for dictionnary in data_list:
+            values.append(dictionnary.get(string))
+    else:
+        for dictionnary in data_list :
+            for key, value in dictionnary.items() :
+                print(value)
+                if value == string :
+                    string_key = key
+            for key, value in dictionnary.items() :
+                if key == string_key :
+                    values.append(value)
+    return values
 
 
 def get_row_values(string) :
-    cell_of_string = SHEET.find(string)
-    return SHEET.row_values(cell_of_string.row)
+    values = []
+    for i in range(len(data_list)) :
+        for value in data_list[i].values() :
+            if value == string :
+                for v in data_list[i].values() :
+                    values.append(v)
+    return values
 
 
 def get_row(string) :
-    cell_of_string = SHEET.find(string)
-    return cell_of_string.row
+    for i in range(len(data_list)) :
+        for value in data_list[i].values() :
+            if value == string :
+                row = i + 1
+    return row
 
 
 def get_last_row() :
-    return len(SHEET.get_all_values())
+    return len(data_list)
 
 
-def get_cell_name(value) :
-    cols_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G',
-                  'H', 'I', 'J', 'K', 'L', 'M', 'N',
-                  'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-                  'V', 'W', 'X', 'Y', 'Z']
-
+def get_cell_name(data) :
     try :
-        cell = SHEET.find(value)
-        for i in range(1, 26) :
-            if i == cell.col :
-                cell_name = cols_names[i - 1] + str(cell.row)
+        for i in range(len(data_list)) :
+            for key, value in data_list[i].items() :
+                if value == data :
+                    row = i + 1
+                for i2 in range(len(cols_name)) :
+                    if key == cols_name[i2] :
+                        col = alphabet[i2]
+        cell_name = col + str(row)
         return cell_name
     except :
         pass
@@ -60,14 +94,18 @@ def add_to_sheet(row, data) :
 
 
 def is_in_col(string, col) :
-    values = SHEET.col_values(col)
-    for i in range(len(values)) :
-        if values[i] == string :
-            return True
-            break
-        elif i == len(values) - 1 and values[i] != string :
-            return False
-            break
+    is_in = None
+    for i in range(len(cols_index)) :
+        if cols_index[i] == col :
+            col = cols_name[i]
+    for diction in data_list :
+        for key, value in diction.items() :
+            if k == col and v == string :
+                is_in = True
+                break
+            else :
+                is_in = False
+    return is_in
 
 
 def add_the_zeros(string, decimal_part_lenght) :
@@ -108,8 +146,9 @@ def in_int(string) :
 
 
 def get_cell_value_from_index(current_index, col) :
-    row = current_index + 1
-    value = SHEET.cell(row, col).value
+    diction = data_list[current_index]
+    for i in range(len(cols_name)):
+        if col == cols_index[i]:
+            value = diction.get(cols_name[i])
     return value
-
 

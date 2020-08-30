@@ -16,64 +16,63 @@ def get_influencer_data_by_username(username) :
 
 
 def get_influencers_by_followers(min, max) :
-    list = []
+    final_list = []
     followers_numbers = get_col_values("FOLLOWERS")
+    followers_numbers = list(filter(None, followers_numbers))
+    # print(followers_numbers)
     for i in range(len(followers_numbers)) :
-        if followers_numbers[i] != "FOLLOWERS" and followers_numbers[i] != "":
-            followers_numbers[i] = in_int(followers_numbers[i])
-            # print(min, " ", followers_numbers[i], " ", max)
-            if min <= followers_numbers[i] <= max :
-                list.append(get_cell_value_from_index(i, 1))
+        followers_numbers[i] = in_int(followers_numbers[i])
+        # print(min, " ", followers_numbers[i], " ", max)
+        if min <= followers_numbers[i] <= max :
+            final_list.append(get_cell_value_from_index(i, 1))
     # print(list)
-    return list
+    return final_list
 
 
 def get_influencers_by_engagement_rate(min, max) :
-    list = []
+    final_list = []
     engagement_rates = get_col_values("E.R")
+    engagement_rates = list(filter(None, engagement_rates))
     for i in range(len(engagement_rates)) :
-        if engagement_rates[i] != "E.R" and engagement_rates[i] != "":
-            current_engagement_rate = float(engagement_rates[i].replace("%", ""))
-            if min <= current_engagement_rate <= max :
-                list.append(get_cell_value_from_index(i, 1))
-    return list
+        current_engagement_rate = float(engagement_rates[i].replace("%", ""))
+        if min <= current_engagement_rate <= max :
+            final_list.append(get_cell_value_from_index(i, 1))
+    return final_list
 
 
 def get_available_countries() :
     available_countries = get_col_values("COUNTRY")
-    available_countries.remove("COUNTRY")
     available_countries = list(filter(None, available_countries))
-    for country in available_countries:
-        if available_countries.count(country) > 1:
+    for country in available_countries :
+        if available_countries.count(country) > 1 :
             available_countries.remove(country)
     return available_countries
 
 
 def get_influencers_by_country(country_name) :
-    list = []
+    final_list = []
     all_countries = get_col_values("COUNTRY")
+    all_countries = list(filter(None, all_countries))
     for i in range(len(all_countries)) :
         if all_countries[i] == country_name :
-            list.append(get_cell_value_from_index(i, 1))
-    return list
+            final_list.append(get_cell_value_from_index(i, 1))
+    return final_list
 
 
 def get_influencers_with_email_address() :
-    list = []
     email_addresses = get_col_values("MAIL")
-    for i in range(len(email_addresses)) :
-        if email_addresses[i] != "MAIL" and email_addresses[i] != "" :
-            list.append(get_cell_value_from_index(i, 1))
-    return list
+    email_addresses = list(filter(None, email_addresses))
+    return email_addresses
 
 
 def get_influencers_contacted_by(contacting_means) :
-    list = []
+    final_list = []
     all_contacting_means = get_col_values("CONTACTED BY")
+    all_contacting_means = list(filter(None, all_contacting_means))
     for i in range(len(all_contacting_means)) :
         if all_contacting_means[i] == contacting_means :
-            list.append(get_cell_value_from_index(i, 1))
-    return list
+            final_list.append(get_cell_value_from_index(i, 1))
+    return final_list
 
 
 def get_all_influencers() :
@@ -107,7 +106,7 @@ def email_influencer(influencer_username, selected_template) :
             i.add_datas()
 
 
-class EmailError(Exception):
+class EmailError(Exception) :
     pass
 
 
@@ -143,25 +142,25 @@ class Influencer :
                 if i > len(influencer_datas_list) - 1 :
                     influencer_datas_list.append("")
                 data = influencer_datas_list[i]
-                if not value in ("", data):
-                    for data_and_column in datas_and_columns_tuples:
-                        if value in data_and_column:
+                if not value in ("", data) :
+                    for data_and_column in datas_and_columns_tuples :
+                        if value in data_and_column :
                             column = data_and_column[0]
-                    if "%" in value and float(value.replace("%", "")) != float(data.replace("%", "")):
+                    if "%" in value and float(value.replace("%", "")) != float(data.replace("%", "")) :
                         datas_to_add.append((column, value))
-                    elif not "%" in value:
+                    elif not "%" in value :
                         datas_to_add.append((column, value))
             return datas_to_add
         else :
-            if self.mail != "" and is_in_col(self.mail, 6):
+            if self.mail != "" and is_in_col(self.mail, 6) :
                 raise EmailError
                 # print("is in")
-            else:
+            else :
                 return datas_and_columns_tuples
 
     def add_datas(self) :
         datas = self.get_datas_to_add()
-        if datas != []:
+        if datas != [] :
             datas_and_columns_tuples = self.link_datas_to_columns()
             if len(datas) != len(datas_and_columns_tuples) :
                 cell = SHEET.find(self.username)
@@ -171,7 +170,7 @@ class Influencer :
                 row = get_last_row() + 1
             add_to_sheet(row, datas)
             return True
-        else:
+        else :
             return None
 
     def link_datas_to_columns(self) :
@@ -193,4 +192,5 @@ if __name__ == '__main__' :
     # email_influencer("papiee75", st)
     # i = get_influencer_data_by_username("papiee75")
     # print(i.link_datas_to_columns())
+    # print(get_influencers_by_followers(12000, 40000))
     pass

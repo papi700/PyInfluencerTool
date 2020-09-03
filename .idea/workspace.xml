@@ -24,6 +24,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/python/package/api/influencer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/influencer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/python/package/api/sheet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/sheet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/python/package/create_selection_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/create_selection_tab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/base/create_selection_tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/base/create_selection_tab.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +89,9 @@
       <module name="PyInfluencerTool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python/package/api" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -127,6 +131,9 @@
       <module name="PyInfluencerTool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/python/package/api" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -248,25 +255,25 @@
     </state>
     <state x="473" y="175" key="FileChooserDialogImpl/0.0.1366.768/-1024.0.1024.768@0.0.1366.768" timestamp="1595264785745" />
     <state x="1865" y="147" key="FileChooserDialogImpl/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598020113085" />
-    <state width="1441" height="784" key="GridCell.Tab.0.bottom" timestamp="1598786261301">
+    <state width="1441" height="257" key="GridCell.Tab.0.bottom" timestamp="1599137144079">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="784" key="GridCell.Tab.0.bottom/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598786261301" />
+    <state width="1441" height="257" key="GridCell.Tab.0.bottom/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1599137144079" />
     <state width="1367" height="168" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1598536656086" />
-    <state width="1441" height="784" key="GridCell.Tab.0.center" timestamp="1598786261301">
+    <state width="1441" height="257" key="GridCell.Tab.0.center" timestamp="1599137144079">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="784" key="GridCell.Tab.0.center/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598786261301" />
+    <state width="1441" height="257" key="GridCell.Tab.0.center/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1599137144079" />
     <state width="1367" height="168" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1598536656086" />
-    <state width="1441" height="784" key="GridCell.Tab.0.left" timestamp="1598786261301">
+    <state width="1441" height="257" key="GridCell.Tab.0.left" timestamp="1599137144079">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="784" key="GridCell.Tab.0.left/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598786261301" />
+    <state width="1441" height="257" key="GridCell.Tab.0.left/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1599137144079" />
     <state width="1367" height="168" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1598536656082" />
-    <state width="1441" height="784" key="GridCell.Tab.0.right" timestamp="1598786261301">
+    <state width="1441" height="257" key="GridCell.Tab.0.right" timestamp="1599137144079">
       <screen x="1366" y="-58" width="1440" height="900" />
     </state>
-    <state width="1441" height="784" key="GridCell.Tab.0.right/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1598786261301" />
+    <state width="1441" height="257" key="GridCell.Tab.0.right/0.0.1366.768/1366.-58.1440.900@1366.-58.1440.900" timestamp="1599137144079" />
     <state width="1367" height="168" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1598536656086" />
     <state width="1441" height="308" key="GridCell.Tab.1.bottom" timestamp="1596577883261">
       <screen x="1366" y="-58" width="1440" height="900" />

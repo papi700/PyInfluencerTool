@@ -111,6 +111,7 @@ def is_in_col(string, col) :
 def add_the_zeros(string, decimal_part_lenght) :
     K = which_char_in_string(["k", "K"], string)
     M = which_char_in_string(["m", "M"], string)
+    letter = ""
     zeros = ""
     number_of_zero_to_add = 0
     if K :

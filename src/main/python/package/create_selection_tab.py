@@ -9,24 +9,16 @@ except :
 
 
 class Worker(QtCore.QObject) :
-    def __init__(self, followers_range, rate_range, countries, with_email_address, contacted_by, obj) :
+    def __init__(self, obj) :
         super().__init__()
-        self.followers_range = followers_range
-        self.rate_range = rate_range
-        self.countries = countries
-        self.with_email_address = with_email_address
-        self.contacted_by = contacted_by
         self.obj = obj
 
-    def create_selection(self) :
-        self.selection = Selection(followers_range=self.followers_range,
-                                   engagement_rate_range=self.rate_range, countries=self.countries,
-                                   with_email_address=self.with_email_address,
-                                   contacted_by=self.contacted_by)
-
-    def get_number_of_selected_influencers(self) :
-        self.create_selection()
-        setattr(self.obj, "influencers_count", self.selection.lenght)
+    def uncheck(self) :
+        o = self.obj
+        list = o.available_countries
+        for i in range(1, len(get_available_countries()) + 1) :
+            if list.item(0).checkState() == Qt.Checked and list.item(i).checkState() == Qt.Checked :
+                list.item(0).setCheckState(Qt.Unchecked)
 
 
 class CreateSelectionTab(QtWidgets.QWidget) :
@@ -96,15 +88,15 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.min_engagement_rate_slider.setGeometry(0, 0, 120, 26)
         self.min_engagement_rate_slider.setMinimum(1)
         self.min_engagement_rate_slider.setMaximum(100)
-        self.min_engagement_rate_slider.setValue(1)
+        self.min_engagement_rate_slider.setValue(0)
 
         self.max_engagement_rate_slider = QtWidgets.QSlider(Qt.Horizontal, parent=self.engagement_rate_slider_frame)
         self.max_engagement_rate_slider.setGeometry(150, 0, 120, 26)
-        self.max_engagement_rate_slider.setMinimum(1)
+        self.max_engagement_rate_slider.setMinimum(0)
         self.max_engagement_rate_slider.setMaximum(100)
         self.max_engagement_rate_slider.setValue(100)
 
-        self.min_engagement_rate = "1"
+        self.min_engagement_rate = "0"
         self.min_engagement_rate_label = QtWidgets.QLabel(f"Min: {self.min_engagement_rate}%",
                                                           parent=self.engagement_rate_slider_frame)
         self.min_engagement_rate_label.setGeometry(0, 30, 90, 26)
@@ -181,6 +173,10 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.dm_and_email_checkbox = QtWidgets.QCheckBox("DM and mail")
         self.dm_and_email_checkbox.setCheckState(Qt.Checked)
 
+        # CLEAR BUTTON
+        self.clear_btn = QtWidgets.QPushButton("Clear")
+        self.clear_btn.setObjectName("clear_btn")
+
         # VALIDATION BUTTON
 
         self.validation_btn = QtWidgets.QPushButton("Create selection")
@@ -248,6 +244,8 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.third_layout.addWidget(self.contacted_by_frame)
         self.main_layout.addLayout(self.third_layout)
 
+        self.last_layout.addWidget(self.clear_btn)
+
         self.last_layout.addWidget(self.validation_btn)
         try :
             self.last_layout.addWidget(self.influencers_count_label)
@@ -256,72 +254,52 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.main_layout.addLayout(self.last_layout)
 
     def setup_connections(self) :
-        self.min_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(self.min_followers))
-        self.max_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(self.max_followers))
-        self.min_engagement_rate_slider.valueChanged.connect(
-            lambda : self.get_influencers_count(self.min_engagement_rate))
-        self.max_engagement_rate_slider.valueChanged.connect(
-            lambda : self.get_influencers_count(self.max_engagement_rate))
-        self.available_countries.itemChanged.connect(lambda : self.get_influencers_count(var=None))
-        self.yes_check_box.stateChanged.connect(lambda : self.get_influencers_count(var=None))
-        self.not_yet_checkbox.stateChanged.connect(lambda : self.get_influencers_count(var=None))
-        self.dm_checkbox.stateChanged.connect(lambda : self.get_influencers_count(var=None))
-        self.email_checkbox.stateChanged.connect(lambda : self.get_influencers_count(var=None))
-        self.dm_and_email_checkbox.stateChanged.connect(lambda : self.get_influencers_count(var=None))
+        self.min_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(followers=True))
+        self.max_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(followers=True))
+        self.min_engagement_rate_slider.valueChanged.connect(lambda : self.get_influencers_count(engagement=True))
+        self.max_engagement_rate_slider.valueChanged.connect(lambda : self.get_influencers_count(engagement=True))
+        self.available_countries.itemChanged.connect(lambda : self.get_influencers_count(countries=True))
+        self.yes_check_box.stateChanged.connect(self.get_influencers_count)
+        self.dm_checkbox.stateChanged.connect(self.get_influencers_count)
+        self.email_checkbox.stateChanged.connect(self.get_influencers_count)
+        self.dm_and_email_checkbox.stateChanged.connect(self.get_influencers_count)
+        self.clear_btn.clicked.connect(self.clear)
 
     # END UI
 
-    def uncheck(self) :
-        list = self.available_countries
-        for i in range(1, len(get_available_countries()) + 1) :
-            if list.item(0).checkState() == Qt.Checked and list.item(i).checkState() == Qt.Checked :
-                list.item(0).setCheckState(Qt.Unchecked)
-
-    def get_slider_value(self, var=None) :
-        if var :
-            if var == self.min_followers :
-                slider = self.min_followers_slider
-                self.min_followers = slider.value()
-                label = self.min_followers_label
-                text = "Min: {}k"
-            elif var == self.max_followers :
-                slider = self.max_followers_slider
-                self.max_followers = slider.value()
-                label = self.max_followers_label
-                text = "Max: {}k"
-            elif var == self.min_engagement_rate :
-                slider = self.min_engagement_rate_slider
-                self.min_engagement_rate = slider.value()
-                label = self.min_engagement_rate_label
-                text = "Min: {}%"
-            elif var == self.max_engagement_rate :
-                slider = self.max_engagement_rate_slider
-                self.max_engagement_rate = slider.value()
-                label = self.max_engagement_rate_label
-                text = "Max: {}%"
-            var = slider.value()
-            text = text.format(var)
-            label.setText(text)
-            if slider == self.max_followers_slider and slider.value() < self.min_followers_slider.value() :
-                self.min_followers_slider.setValue(self.max_followers_slider.value())
-            elif slider == self.max_engagement_rate_slider and slider.value() < self.min_engagement_rate_slider.value() :
-                self.min_engagement_rate_slider.setValue(self.max_engagement_rate_slider.value())
+    def control_slider(self, min, max) :
+        if max.value() < min.value() :
+            min.setValue(max.value())
 
     def get_selected_countries(self) :
         list = []
         if self.available_countries.item(0).checkState() == Qt.Unchecked :
             for i in range(1, len(get_available_countries()) + 1) :
-                if self.available_countries.item(i).checkState() == Qt.Checked:
+                if self.available_countries.item(i).checkState() == Qt.Checked :
                     list.append(self.available_countries.item(i).text())
         else :
             list = None
         return list
 
-    def get_influencers_count(self, var=None) :
-        if var != self.available_countries :
-            self.get_slider_value(var)
-        else :
-            self.uncheck()
+    def get_influencers_count(self, followers=None, engagement=None, countries=None) :
+        if followers:
+            self.control_slider(self.min_followers_slider, self.max_followers_slider)
+            self.min_followers = self.min_followers_slider.value()
+            self.min_followers_label.setText(f"Min: {self.min_followers}k")
+            self.max_followers = self.max_followers_slider.value()
+            self.max_followers_label.setText(f"Max: {self.max_followers}k")
+        elif engagement:
+            self.control_slider(self.min_engagement_rate_slider, self.max_engagement_rate_slider)
+            self.min_engagement_rate = self.min_engagement_rate_slider.value()
+            self.min_engagement_rate_label.setText(f"Min: {self.min_engagement_rate}%")
+            self.max_engagement_rate = self.max_engagement_rate_slider.value()
+            self.max_engagement_rate_label.setText(f"Max: {self.max_engagement_rate}%")
+        elif countries:
+            self.thread = QtCore.QThread(self)
+            self.worker = Worker(self)
+            self.worker.moveToThread(self.thread)
+            self.thread.started.connect(self.worker.uncheck)
+            self.thread.start()
         followers_count_range = (int(str(self.min_followers) + "000"), int(str(self.max_followers) + "000"))
         engagement_rate_range = (float(self.min_engagement_rate), float(self.max_engagement_rate))
         countries = self.get_selected_countries()
@@ -349,3 +327,16 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.influencers_count = self.selection.lenght
         self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
 
+    def clear(self) :
+        self.min_followers_slider.setValue(5)
+        self.max_followers_slider.setValue(200)
+        self.min_engagement_rate_slider.setValue(0)
+        self.max_engagement_rate_slider.setValue(100)
+        self.available_countries.item(0).setCheckState(Qt.Checked)
+        for i in range(1, len(get_available_countries()) + 1) :
+            self.available_countries.item(i).setCheckState(Qt.Unchecked)
+        self.yes_check_box.setCheckState(Qt.Unchecked)
+        self.not_yet_checkbox.setCheckState(Qt.Checked)
+        self.dm_checkbox.setCheckState(Qt.Checked)
+        self.email_checkbox.setCheckState(Qt.Checked)
+        self.dm_and_email_checkbox.setCheckState(Qt.Checked)

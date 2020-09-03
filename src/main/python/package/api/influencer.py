@@ -18,13 +18,13 @@ def get_influencer_data_by_username(username) :
 def get_influencers_by_followers(min, max) :
     final_list = []
     followers_numbers = get_col_values("FOLLOWERS")
-    followers_numbers = list(filter(None, followers_numbers))
     # print(followers_numbers)
     for i in range(len(followers_numbers)) :
-        followers_numbers[i] = in_int(followers_numbers[i])
-        # print(min, " ", followers_numbers[i], " ", max)
-        if min <= followers_numbers[i] <= max :
-            final_list.append(get_cell_value_from_index(i, 1))
+        if followers_numbers[i] != "":
+            followers_numbers[i] = in_int(followers_numbers[i])
+            # print(min, " ", followers_numbers[i], " ", max)
+            if min <= followers_numbers[i] <= max :
+                final_list.append(get_cell_value_from_index(i, 1))
     # print(list)
     return final_list
 
@@ -32,11 +32,11 @@ def get_influencers_by_followers(min, max) :
 def get_influencers_by_engagement_rate(min, max) :
     final_list = []
     engagement_rates = get_col_values("E.R")
-    engagement_rates = list(filter(None, engagement_rates))
     for i in range(len(engagement_rates)) :
-        current_engagement_rate = float(engagement_rates[i].replace("%", ""))
-        if min <= current_engagement_rate <= max :
-            final_list.append(get_cell_value_from_index(i, 1))
+        if engagement_rates[i] != "":
+            current_engagement_rate = float(engagement_rates[i].replace("%", ""))
+            if min <= current_engagement_rate <= max :
+                final_list.append(get_cell_value_from_index(i, 1))
     return final_list
 
 
@@ -52,7 +52,6 @@ def get_available_countries() :
 def get_influencers_by_country(country_name) :
     final_list = []
     all_countries = get_col_values("COUNTRY")
-    all_countries = list(filter(None, all_countries))
     for i in range(len(all_countries)) :
         if all_countries[i] == country_name :
             final_list.append(get_cell_value_from_index(i, 1))
@@ -60,8 +59,11 @@ def get_influencers_by_country(country_name) :
 
 
 def get_influencers_with_email_address() :
+    final_list = []
     email_addresses = get_col_values("MAIL")
-    email_addresses = list(filter(None, email_addresses))
+    for i in range(len(email_addresses)) :
+        if email_addresses != "":
+            final_list.append(get_cell_value_from_index(i, 1))
     return email_addresses
 
 

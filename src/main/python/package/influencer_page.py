@@ -137,7 +137,7 @@ class InfluencerPage(QtWidgets.QWidget) :
                     i = Influencer(datas)
                     result = i.add_datas()
                     for selection in get_selections() :
-                        selection.update(i)
+                        selection.update(i.username)
                     if result :
                         self.message_box.setText("The datas have been added to the spreadsheet")
                     else :

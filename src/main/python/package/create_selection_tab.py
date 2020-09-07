@@ -28,6 +28,7 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.setup_ui()
 
     def setup_ui(self) :
+        self.create_selection()
         self.create_widgets()
         self.modify_widgets()
         self.create_layouts()
@@ -183,8 +184,10 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.validation_btn.setObjectName("validation_btn")
 
         # NUMBER OF INFLUENCERS LABEL
+
+        print(self.selection.lenght)
         try :
-            self.influencers_count = len(get_all_influencers())
+            self.influencers_count = self.selection.lenght
             self.influencers_count_label = QtWidgets.QLabel(
                 f"Selected influencers count: {str(self.influencers_count)}")
             self.influencers_count_label.setFrameShape(QtWidgets.QFrame.Box)
@@ -264,8 +267,11 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.email_checkbox.stateChanged.connect(self.get_influencers_count)
         self.dm_and_email_checkbox.stateChanged.connect(self.get_influencers_count)
         self.clear_btn.clicked.connect(self.clear)
+        self.validation_btn.clicked.connect(self.save_selection)
 
     # END UI
+    def create_selection(self) :
+        self.selection = Selection(followers_range=(5000, 200000), engagement_rate_range=(0, 100))
 
     def control_slider(self, min, max) :
         if max.value() < min.value() :
@@ -282,19 +288,19 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         return list
 
     def get_influencers_count(self, followers=None, engagement=None, countries=None) :
-        if followers:
+        if followers :
             self.control_slider(self.min_followers_slider, self.max_followers_slider)
             self.min_followers = self.min_followers_slider.value()
             self.min_followers_label.setText(f"Min: {self.min_followers}k")
             self.max_followers = self.max_followers_slider.value()
             self.max_followers_label.setText(f"Max: {self.max_followers}k")
-        elif engagement:
+        elif engagement :
             self.control_slider(self.min_engagement_rate_slider, self.max_engagement_rate_slider)
             self.min_engagement_rate = self.min_engagement_rate_slider.value()
             self.min_engagement_rate_label.setText(f"Min: {self.min_engagement_rate}%")
             self.max_engagement_rate = self.max_engagement_rate_slider.value()
             self.max_engagement_rate_label.setText(f"Max: {self.max_engagement_rate}%")
-        elif countries:
+        elif countries :
             self.thread = QtCore.QThread(self)
             self.worker = Worker(self)
             self.worker.moveToThread(self.thread)
@@ -340,3 +346,51 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.dm_checkbox.setCheckState(Qt.Checked)
         self.email_checkbox.setCheckState(Qt.Checked)
         self.dm_and_email_checkbox.setCheckState(Qt.Checked)
+
+    def save_selection(self) :
+        self.dialog = QtWidgets.QDialog(self)
+        self.dialog.setWindowTitle("Create Selection")
+        dialog_main_layout = QtWidgets.QVBoxLayout(self.dialog)
+        dialog_H_layout_1 = QtWidgets.QHBoxLayout()
+        dialog_H_layout_2 = QtWidgets.QHBoxLayout()
+        selection_name_label = QtWidgets.QLabel("Selection name: ")
+        selection_name_label.setObjectName("selection_name_label")
+        selection_name_label.setFrameShape(QtWidgets.QFrame.Box)
+
+        edit = QtWidgets.QLineEdit(self.selection.name)
+
+        dialog_H_layout_1.addWidget(selection_name_label)
+        dialog_H_layout_1.addWidget(edit)
+
+        buttons_frame = QtWidgets.QFrame()
+        buttons_frame.setObjectName("buttons_frame")
+        button_1 = QtWidgets.QPushButton("Ok")
+        button_1.setObjectName("button_1")
+        button_2 = QtWidgets.QPushButton("Cancel")
+        button_2.setObjectName("button_2")
+
+        ok_btn = QtWidgets.QDialogButtonBox(parent=buttons_frame)
+        ok_btn.setGeometry(150, 0, 80, 30)
+        ok_btn.addButton(button_1, QtWidgets.QDialogButtonBox.AcceptRole)
+        ok_btn.accepted.connect(self.dialog.accept)
+
+        cancel_btn = QtWidgets.QDialogButtonBox(parent=buttons_frame)
+        cancel_btn.setGeometry(245, 0, 80, 30)
+        cancel_btn.addButton(button_2, QtWidgets.QDialogButtonBox.RejectRole)
+        cancel_btn.rejected.connect(self.dialog.reject)
+
+        dialog_H_layout_2.addWidget(buttons_frame)
+
+        dialog_main_layout.addLayout(dialog_H_layout_1)
+        dialog_main_layout.addLayout(dialog_H_layout_2)
+
+        def save(obj):
+            obj.selection.save()
+            message_box = QtWidgets.QMessageBox(obj)
+            message_box.setText(f"Selection of name '{edit.text()}', created.")
+            message_box.show()
+
+        self.dialog.accepted.connect(lambda : save(self))
+
+        self.dialog.exec_()
+

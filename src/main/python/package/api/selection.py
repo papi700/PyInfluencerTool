@@ -60,7 +60,7 @@ class Selection :
         self.child = []
         self.criterias = self.get_criterias()
         # print(self.criterias)
-        if influencers:
+        if influencers :
             self.influencers = influencers
         else :
             self.influencers = self.get_matching_influencers()
@@ -119,6 +119,7 @@ class Selection :
             self.influencers.append(influencer)
         elif influencer in self.influencers :
             self.influencers.remove(influencer)
+        self.save()
 
     def split(self, number_of_subselections) :
         if number_of_subselections % self.lenght == 0 :
@@ -129,6 +130,10 @@ class Selection :
     @property
     def path(self) :
         return os.path.join(SELECTIONS_DIR, self.uuid + ".json")
+
+    def myconverter(self, o) :
+        if isinstance(o, date) :
+            return o.__str__()
 
     def save(self) :
         if not os.path.exists(SELECTIONS_DIR) :
@@ -142,7 +147,7 @@ class Selection :
                 "influencers" : self.influencers}
 
         with open(self.path, "w") as f :
-            json.dump(data, f, indent=4)
+            json.dump(data, f, indent=4, default=self.myconverter)
 
     def delete(self) :
         os.remove(self.path)

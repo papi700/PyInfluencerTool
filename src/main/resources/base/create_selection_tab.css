@@ -89,7 +89,7 @@ QLabel{
 }
 
 QLineEdit {
-    width: 180px;
+    width: 210px;
     background-color: #001b28;
     color: rgb(80, 127, 230);
     height: 35px;
@@ -215,6 +215,24 @@ QSlider::handle:horizontal {
 
 #followers_slider_frame{
    margin-left: 40px;
+}
+
+#selection_name_label{
+    width: 100px;
+}
+
+#buttons_frame{
+    min-height: 30px;
+    min-width: 340px;
+}
+
+#button_1, #button_2{
+    border: 0px solid;
+    background: rgb(80, 127, 230);
+    min-width: 80px;
+    min-height: 25px;
+    color: white;
+    font-size: 13px;
 }
 
 

@@ -4,15 +4,17 @@ import os
 import re
 from pathlib import Path
 
+try :
+    SCOPE = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
+             "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 
-SCOPE = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
-         "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+    CRED = ServiceAccountCredentials.from_json_keyfile_name("D:/PythonProjects/creds.json", SCOPE)
 
-CRED = ServiceAccountCredentials.from_json_keyfile_name("D:/PythonProjects/creds.json", SCOPE)
+    CLIENT = gspread.authorize(CRED)
 
-CLIENT = gspread.authorize(CRED)
-
-SHEET = CLIENT.open("test").sheet1
+    SHEET = CLIENT.open("test").sheet1
+except :
+    pass
 
 SERVER_LOGIN = os.environ.get('SERVER_LOGIN')
 

@@ -2,7 +2,10 @@ import smtplib
 from email.message import EmailMessage
 import json
 
-from package.api.sheet import *
+try:
+    from package.api.sheet import *
+except:
+    pass
 from package.api.constants import SERVER_LOGIN, SERVER_PASSWORD
 
 

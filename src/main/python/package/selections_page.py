@@ -1,6 +1,7 @@
 from PySide2 import QtWidgets
 
 from package.create_selection_tab import CreateSelectionTab
+from package.my_selections_tab import MySelectionTab
 
 
 class SelectionsPage(QtWidgets.QWidget) :
@@ -22,6 +23,9 @@ class SelectionsPage(QtWidgets.QWidget) :
         self.tabs = QtWidgets.QTabWidget(self)
         self.create_selection_tab = CreateSelectionTab(ctx=self.ctx)
         self.tabs.addTab(self.create_selection_tab, "Create selection")
+        self.my_selections_tab = MySelectionTab(ctx=self.ctx)
+        self.tabs.addTab(self.my_selections_tab, "My selections")
+        # print(self.tabs.count())
 
     def modify_widgets(self) :
         css_file = self.ctx.get_resource("selections_page.css")

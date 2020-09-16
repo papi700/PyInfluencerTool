@@ -28,7 +28,6 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.setup_ui()
 
     def setup_ui(self) :
-        self.create_selection()
         self.create_widgets()
         self.modify_widgets()
         self.create_layouts()
@@ -184,16 +183,15 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.validation_btn.setObjectName("validation_btn")
 
         # NUMBER OF INFLUENCERS LABEL
-
-        print(self.selection.lenght)
         try :
+            self.selection = Selection(followers_range=(5000, 200000), engagement_rate_range=(0, 100))
             self.influencers_count = self.selection.lenght
             self.influencers_count_label = QtWidgets.QLabel(
                 f"Selected influencers count: {str(self.influencers_count)}")
             self.influencers_count_label.setFrameShape(QtWidgets.QFrame.Box)
             self.influencers_count_label.setObjectName("influencers_count_label")
         except :
-            pass
+            self.influencers_count_label.setText("No connection")
 
     def modify_widgets(self) :
         css_file = self.ctx.get_resource("create_selection_tab.css")
@@ -270,8 +268,6 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.validation_btn.clicked.connect(self.save_selection)
 
     # END UI
-    def create_selection(self) :
-        self.selection = Selection(followers_range=(5000, 200000), engagement_rate_range=(0, 100))
 
     def control_slider(self, min, max) :
         if max.value() < min.value() :
@@ -326,12 +322,15 @@ class CreateSelectionTab(QtWidgets.QWidget) :
                 contacted_by.append("DM and mail")
         if len(contacted_by) == 4 :
             contacted_by = None
-        self.selection = Selection(followers_range=followers_count_range,
-                                   engagement_rate_range=engagement_rate_range, countries=countries,
-                                   with_email_address=with_email,
-                                   contacted_by=contacted_by)
-        self.influencers_count = self.selection.lenght
-        self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
+        try :
+            self.selection = Selection(followers_range=followers_count_range,
+                                       engagement_rate_range=engagement_rate_range, countries=countries,
+                                       with_email_address=with_email,
+                                       contacted_by=contacted_by)
+            self.influencers_count = self.selection.lenght
+            self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
+        except :
+            pass
 
     def clear(self) :
         self.min_followers_slider.setValue(5)
@@ -384,13 +383,15 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         dialog_main_layout.addLayout(dialog_H_layout_1)
         dialog_main_layout.addLayout(dialog_H_layout_2)
 
-        def save(obj):
-            obj.selection.save()
-            message_box = QtWidgets.QMessageBox(obj)
-            message_box.setText(f"Selection of name '{edit.text()}', created.")
-            message_box.show()
+        def save(obj) :
+            try :
+                obj.selection.save()
+                message_box = QtWidgets.QMessageBox(obj)
+                message_box.setText(f"Selection of name '{edit.text()}', created.")
+                message_box.show()
+            except :
+                pass
 
         self.dialog.accepted.connect(lambda : save(self))
 
         self.dialog.exec_()
-

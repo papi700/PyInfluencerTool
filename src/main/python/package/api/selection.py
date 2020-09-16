@@ -4,7 +4,11 @@ from uuid import uuid4
 import json
 import os
 
-from package.api.influencer import *
+try:
+    from package.api.influencer import *
+except:
+    pass
+
 from package.api.constants import SELECTIONS_DIR
 
 
@@ -49,7 +53,7 @@ class Selection :
         else :
             self.uuid = uuid
         self.followers_range = followers_range
-        self.engagment_rate_range = engagement_rate_range
+        self.engagement_rate_range = engagement_rate_range
         self.countries = countries
         self.with_email_address = with_email_address
         self.contacted_by = contacted_by
@@ -68,7 +72,7 @@ class Selection :
 
     def get_criterias(self) :
         selection_criterias = []
-        all_criterias = [self.followers_range, self.engagment_rate_range, self.countries, self.with_email_address,
+        all_criterias = [self.followers_range, self.engagement_rate_range, self.countries, self.with_email_address,
                          self.contacted_by]
         for criteria in all_criterias :
             if criteria :
@@ -78,7 +82,7 @@ class Selection :
     def call_right_function(self, criteria) :
         if criteria == self.followers_range :
             return get_influencers_by_followers(criteria[0], criteria[1])
-        elif criteria == self.engagment_rate_range :
+        elif criteria == self.engagement_rate_range :
             return get_influencers_by_engagement_rate(criteria[0], criteria[1])
         elif criteria == self.countries :
             influencers = []
@@ -140,8 +144,8 @@ class Selection :
             os.makedirs(SELECTIONS_DIR)
 
         data = {"name" : self.name, "followers_range" : self.followers_range,
-                "engagement_rate_range" : self.engagment_rate_range,
-                "courntries" : self.countries, "with_email_address" : self.with_email_address,
+                "engagement_rate_range" : self.engagement_rate_range,
+                "countries" : self.countries, "with_email_address" : self.with_email_address,
                 "contacted_by" : self.contacted_by, "creation_date" : self.creation_date,
                 "lenght" : self.lenght, "child" : self.child, "criterias" : self.criterias,
                 "influencers" : self.influencers}

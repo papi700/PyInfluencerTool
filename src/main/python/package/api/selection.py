@@ -45,7 +45,7 @@ class Selection :
                  with_email_address=False, contacted_by=None, creation_date=None, influencers=None) :
         if name == "" :
             directory_lenght = len(glob(os.path.join(SELECTIONS_DIR, "*.json")))
-            self.name = "selection_" + str(directory_lenght + 1)
+            self.name = "Selection_" + str(directory_lenght + 1)
         else :
             self.name = name
         if uuid == "" :
@@ -58,7 +58,9 @@ class Selection :
         self.with_email_address = with_email_address
         self.contacted_by = contacted_by
         if creation_date is None :
-            self.creation_date = date.today()
+            d = str(date.today())
+            d = d.split("-")
+            self.creation_date = d[2]+"-"+d[1]+"-"+d[0]
         else :
             self.creation_date = creation_date
         self.child = []
@@ -135,10 +137,6 @@ class Selection :
     def path(self) :
         return os.path.join(SELECTIONS_DIR, self.uuid + ".json")
 
-    def myconverter(self, o) :
-        if isinstance(o, date) :
-            return o.__str__()
-
     def save(self) :
         if not os.path.exists(SELECTIONS_DIR) :
             os.makedirs(SELECTIONS_DIR)
@@ -147,11 +145,11 @@ class Selection :
                 "engagement_rate_range" : self.engagement_rate_range,
                 "countries" : self.countries, "with_email_address" : self.with_email_address,
                 "contacted_by" : self.contacted_by, "creation_date" : self.creation_date,
-                "lenght" : self.lenght, "child" : self.child, "criterias" : self.criterias,
+                "lenght" : self.lenght, "child" : self.child,
                 "influencers" : self.influencers}
 
         with open(self.path, "w") as f :
-            json.dump(data, f, indent=4, default=self.myconverter)
+            json.dump(data, f, indent=4)
 
     def delete(self) :
         os.remove(self.path)
@@ -163,3 +161,4 @@ class Selection :
 
 if __name__ == '__main__' :
     pass
+    # s = Selection()

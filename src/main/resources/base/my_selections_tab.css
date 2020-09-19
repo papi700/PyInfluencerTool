@@ -15,9 +15,7 @@ QListWidget::item::hover{
    color: white;
 }
 
-QGroupBox{
-    margin-top: 20px;
-    min-heith: 230px;
+#selection_information{
     border: 0.5px solid rgb(5, 63, 91);
     border-radius: 10px;
 }
@@ -90,17 +88,16 @@ QScrollArea {
 	background: #00293d;
 }
 
-#criteria_label, #creation_date_label{
+#criteria_label, #creation_date_label, #lenght_label{
     color: rgb(80, 127, 230);
     font-size: 20px;
-    max-height: 30px;
-    max-width: 220px;
     border: 0px solid;
-    background: white;
+
 }
 
-#criterias_label{
+#criterias_label, #date_label, #the_lenght_label{
     color: rgb(80, 127, 230);
-    font-size: 10px;
+    font-size: 17px;
+    border: 0px solid;
 }
 

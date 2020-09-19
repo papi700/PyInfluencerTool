@@ -183,13 +183,14 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.validation_btn.setObjectName("validation_btn")
 
         # NUMBER OF INFLUENCERS LABEL
+
+        self.influencers_count_label = QtWidgets.QLabel()
+        self.influencers_count_label.setFrameShape(QtWidgets.QFrame.Box)
+        self.influencers_count_label.setObjectName("influencers_count_label")
         try :
             self.selection = Selection(followers_range=(5000, 200000), engagement_rate_range=(0, 100))
             self.influencers_count = self.selection.lenght
-            self.influencers_count_label = QtWidgets.QLabel(
-                f"Selected influencers count: {str(self.influencers_count)}")
-            self.influencers_count_label.setFrameShape(QtWidgets.QFrame.Box)
-            self.influencers_count_label.setObjectName("influencers_count_label")
+            self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
         except :
             self.influencers_count_label.setText("No connection")
 

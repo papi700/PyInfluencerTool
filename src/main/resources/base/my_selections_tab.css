@@ -1,4 +1,4 @@
-QListWidget{
+#selections_list{
     max-heith: 250px;
     border: 0.5px solid rgb(5, 63, 91);
     border-radius: 10px;

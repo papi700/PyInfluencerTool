@@ -97,15 +97,18 @@ def is_in_col(string, col) :
     is_in = None
     for i in range(len(cols_index)) :
         if cols_index[i] == col :
-            col = cols_name[i]
+            col_name = cols_name[i]
     for diction in data_list :
         for key, value in diction.items() :
-            if k == col and v == string :
+            if key == col_name and value == string :
                 is_in = True
-                break
             else :
                 is_in = False
-    return is_in
+            if is_in:
+                break
+        if is_in:
+            return True
+            break
 
 
 def add_the_zeros(string, decimal_part_lenght) :

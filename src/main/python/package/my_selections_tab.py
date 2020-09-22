@@ -3,6 +3,7 @@ from PySide2 import QtWidgets, QtCore, QtGui
 
 from package.api.selection import get_selections
 
+from package.api.influencer import get_influencer_data_by_username
 
 class MySelectionTab(QtWidgets.QWidget) :
     def __init__(self, ctx) :
@@ -22,6 +23,7 @@ class MySelectionTab(QtWidgets.QWidget) :
         self.selections_list = QtWidgets.QListWidget()
         self.selections_list.setMaximumHeight(200)
         self.selections_list.setMaximumWidth(1271)
+        self.selections_list.setObjectName("selections_list")
 
         self.selection_information = QtWidgets.QFrame()
         self.selection_information.setObjectName("selection_information")
@@ -57,6 +59,10 @@ class MySelectionTab(QtWidgets.QWidget) :
         self.the_lenght_label.setObjectName("the_lenght_label")
         self.the_lenght_label.setFrameShape(QtWidgets.QFrame.Box)
         self.the_lenght_label.setGeometry(20, 320, 200, 30)
+
+        self.influencers_list = QtWidgets.QListWidget(parent=self.selection_information)
+        self.influencers_list.setGeometry(320, 30, 931, 480)
+        # print(self.selection_information.height())
 
     def modify_widgets(self) :
         css_file = self.ctx.get_resource("my_selections_tab.css")
@@ -146,3 +152,29 @@ class MySelectionTab(QtWidgets.QWidget) :
 
             self.date_label.setText(selection.creation_date)
             self.the_lenght_label.setText(str(selection.lenght))
+
+            criterias = [selection.followers_range, selection.engagement_rate_range, selection.countries,
+                         selection.with_email_address, selection.contacted_by]
+
+            x = 0
+            for influencer in selection.influencers:
+                item = QtWidgets.QListWidgetItem()
+                widget = QtWidgets.QFrame()
+                label = QtWidgets.QLabel(influencer, parent=widget)
+                label.setGeometry(x, 0, 20, 20)
+                influencer = get_influencer_data_by_username(influencer)
+                influencer_properties = [influencer.followers, influencer.engagement_rate, influencer.country,
+                                         influencer.mail, influencer.contacted_by]
+                x = 40
+                for i in range(len(criterias)):
+                    if criterias[i]:
+                        if isinstance(influencer_properties[i], float):
+                            label = QtWidgets.QLabel(str(influencer_properties[i], parent=widget))
+                            label.setGeometry(x, 0, 20, 20)
+                        else:
+                            label = QtWidgets.QLabel(influencer_properties[i], parent=widget)
+                            label.setGeometry(x, 0, 20, 20)
+                        x += 40
+                item.setSizeHint(widget.sizeHint())
+                self.influencers_list.addItem(item)
+                self.influencers_list.setItemWidget(item, widget)

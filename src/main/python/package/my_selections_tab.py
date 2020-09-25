@@ -61,7 +61,7 @@ class MySelectionTab(QtWidgets.QWidget) :
         self.the_lenght_label.setGeometry(20, 320, 200, 30)
 
         self.influencers_list = QtWidgets.QTableWidget(parent=self.selection_information)
-        self.influencers_list.setGeometry(320, 30, 931, 480)
+        self.influencers_list.setGeometry(390, 30, 931, 480)
 
     def modify_widgets(self) :
         css_file = self.ctx.get_resource("my_selections_tab.css")
@@ -164,15 +164,16 @@ class MySelectionTab(QtWidgets.QWidget) :
                 influencer = get_influencer_data_by_username(influencer)
                 influencer_properties = [influencer.followers, influencer.engagement_rate, influencer.country,
                                          influencer.mail, influencer.contacted_by]
-                y += 1
                 # x = 40
                 for i in range(len(criterias)):
                     if criterias[i]:
+                        print(influencer.username, influencer_properties[i])
                         if isinstance(influencer_properties[i], float):
                             engagement_rate = QtWidgets.QTableWidgetItem(str(influencer_properties[i]))
                             self.influencers_list.setItem(y, i+1, engagement_rate)
                         else:
                             property = QtWidgets.QTableWidgetItem(influencer_properties[i])
                             self.influencers_list.setItem(y, i+1, property)
+                y += 1
                 # self.influencers_list.addItem(item)
                 # self.influencers_list.setItemWidget(item, widget)

@@ -60,9 +60,8 @@ class MySelectionTab(QtWidgets.QWidget) :
         self.the_lenght_label.setFrameShape(QtWidgets.QFrame.Box)
         self.the_lenght_label.setGeometry(20, 320, 200, 30)
 
-        self.influencers_list = QtWidgets.QListWidget(parent=self.selection_information)
+        self.influencers_list = QtWidgets.QTableWidget(parent=self.selection_information)
         self.influencers_list.setGeometry(320, 30, 931, 480)
-        # print(self.selection_information.height())
 
     def modify_widgets(self) :
         css_file = self.ctx.get_resource("my_selections_tab.css")
@@ -156,25 +155,24 @@ class MySelectionTab(QtWidgets.QWidget) :
             criterias = [selection.followers_range, selection.engagement_rate_range, selection.countries,
                          selection.with_email_address, selection.contacted_by]
 
-            x = 0
+            self.influencers_list.setColumnCount(len(all_criterias)+1)
+            self.influencers_list.setRowCount(selection.lenght)
+            y = 0
             for influencer in selection.influencers:
-                item = QtWidgets.QListWidgetItem()
-                widget = QtWidgets.QFrame()
-                label = QtWidgets.QLabel(influencer, parent=widget)
-                label.setGeometry(x, 0, 20, 20)
+                username = QtWidgets.QTableWidgetItem(influencer)
+                self.influencers_list.setItem(y, 0, username)
                 influencer = get_influencer_data_by_username(influencer)
                 influencer_properties = [influencer.followers, influencer.engagement_rate, influencer.country,
                                          influencer.mail, influencer.contacted_by]
-                x = 40
+                y += 1
+                # x = 40
                 for i in range(len(criterias)):
                     if criterias[i]:
                         if isinstance(influencer_properties[i], float):
-                            label = QtWidgets.QLabel(str(influencer_properties[i], parent=widget))
-                            label.setGeometry(x, 0, 20, 20)
+                            engagement_rate = QtWidgets.QTableWidgetItem(str(influencer_properties[i]))
+                            self.influencers_list.setItem(y, i+1, engagement_rate)
                         else:
-                            label = QtWidgets.QLabel(influencer_properties[i], parent=widget)
-                            label.setGeometry(x, 0, 20, 20)
-                        x += 40
-                item.setSizeHint(widget.sizeHint())
-                self.influencers_list.addItem(item)
-                self.influencers_list.setItemWidget(item, widget)
+                            property = QtWidgets.QTableWidgetItem(influencer_properties[i])
+                            self.influencers_list.setItem(y, i+1, property)
+                # self.influencers_list.addItem(item)
+                # self.influencers_list.setItemWidget(item, widget)

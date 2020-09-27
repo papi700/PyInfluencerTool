@@ -33,6 +33,7 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.create_layouts()
         self.add_widgets_to_layouts()
         self.setup_connections()
+        print(self.width(), self.height())
 
     def create_widgets(self) :
         self.followers_frame = QtWidgets.QFrame()

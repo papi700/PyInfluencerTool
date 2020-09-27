@@ -1,3 +1,22 @@
-QWidget {
-    background-color: #00293d;
+QTabBar::tab{
+    height: 30px;
+    width:  200px;
+    border: 0px solid;
+    background: white;
+    color: rgb(80, 127, 230);
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+QTabBar::tab:selected {
+    background: #00293d;
+}
+
+QTabWidget::pane {
+    border: 0px solid;
+    color: #001b28;
+}
+
+#main_frame{
+   background: #00293d;
 }

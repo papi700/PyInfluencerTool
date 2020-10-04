@@ -13,13 +13,14 @@ QLineEdit, QTextEdit{
 
 QPushButton{
     background-color: #507fe6;
+    margin-top: 15px;
     color: white;
     border: 0px solid rgb(75, 75, 75);
     border-radius: 12px;
-    font-size: 20px;
+    font-size: 30px;
     padding: 0px 8px 0px 8px;
-    min-height: 32px;
+    min-height: 52px;
 }
-QInputDialog{
-    min-width: 250px;
+QDialog{
+    background-color: #00293d;
 }

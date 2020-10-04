@@ -68,7 +68,7 @@ class CreateTemplateTab(QtWidgets.QWidget) :
         elif subject and body:
             template = EmailTemplate(subject=subject, body=body)
             dialog = QtWidgets.QInputDialog(self)
-            name, result = dialog.getText(self, "Ajouter une note", "Titre: ", text=template.name)
+            name, result = dialog.getText(self, "Add a template", "Titre: ", text=template.name)
             if result:
                 template.save()
                 self.message = f"Template of name '{name}', created."

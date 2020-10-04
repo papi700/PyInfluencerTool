@@ -19,16 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="134de9ed-a651-4da1-a95c-b40a55fed19f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/package/api/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/package/api/template.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/api/template.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/package/create_selection_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/create_selection_tab.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/package/create_template_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/create_template_tab.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/python/package/templates_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/python/package/templates_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/base/create_template_tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/base/create_template_tab.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/base/templates_page.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/base/templates_page.css" afterDir="false" />
-    </list>
+    <list default="true" id="134de9ed-a651-4da1-a95c-b40a55fed19f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

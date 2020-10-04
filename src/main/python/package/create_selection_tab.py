@@ -1,33 +1,33 @@
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Qt
 
-try :
+try:
     from package.api.influencer import get_available_countries, get_all_influencers
     from package.api.selection import Selection
-except :
+except:
     pass
 
 
-class Worker(QtCore.QObject) :
-    def __init__(self, obj) :
+class Worker(QtCore.QObject):
+    def __init__(self, obj):
         super().__init__()
         self.obj = obj
 
-    def uncheck(self) :
+    def uncheck(self):
         o = self.obj
         list = o.available_countries
-        for i in range(1, len(get_available_countries()) + 1) :
-            if list.item(0).checkState() == Qt.Checked and list.item(i).checkState() == Qt.Checked :
+        for i in range(1, len(get_available_countries()) + 1):
+            if list.item(0).checkState() == Qt.Checked and list.item(i).checkState() == Qt.Checked:
                 list.item(0).setCheckState(Qt.Unchecked)
 
 
-class CreateSelectionTab(QtWidgets.QWidget) :
-    def __init__(self, ctx) :
+class CreateSelectionTab(QtWidgets.QWidget):
+    def __init__(self, ctx):
         super().__init__()
         self.ctx = ctx
         self.setup_ui()
 
-    def setup_ui(self) :
+    def setup_ui(self):
         self.create_widgets()
         self.modify_widgets()
         self.create_layouts()
@@ -35,7 +35,7 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.setup_connections()
         print(self.width(), self.height())
 
-    def create_widgets(self) :
+    def create_widgets(self):
         self.followers_frame = QtWidgets.QFrame()
         self.followers_frame.setObjectName("followers_frame")
 
@@ -128,12 +128,12 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         item = QtWidgets.QListWidgetItem("All")
         item.setCheckState(Qt.Checked)
         self.available_countries.addItem(item)
-        try :
-            for country in get_available_countries() :
+        try:
+            for country in get_available_countries():
                 item = QtWidgets.QListWidgetItem(country)
                 item.setCheckState(Qt.Unchecked)
                 self.available_countries.addItem(item)
-        except :
+        except:
             pass
 
         self.third_line = QtWidgets.QFrame()
@@ -188,19 +188,19 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.influencers_count_label = QtWidgets.QLabel()
         self.influencers_count_label.setFrameShape(QtWidgets.QFrame.Box)
         self.influencers_count_label.setObjectName("influencers_count_label")
-        try :
+        try:
             self.selection = Selection(followers_range=(5000, 200000), engagement_rate_range=(0, 100))
             self.influencers_count = self.selection.lenght
             self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
-        except :
+        except:
             self.influencers_count_label.setText("No connection")
 
-    def modify_widgets(self) :
+    def modify_widgets(self):
         css_file = self.ctx.get_resource("create_selection_tab.css")
-        with open(css_file, "r") as f :
+        with open(css_file, "r") as f:
             self.setStyleSheet(f.read())
 
-    def create_layouts(self) :
+    def create_layouts(self):
         self.followers_layout = QtWidgets.QVBoxLayout(self.followers_frame)
         self.followers_layout.setMargin(30)
         self.engagement_rate_layout = QtWidgets.QVBoxLayout(self.engagement_rate_frame)
@@ -217,7 +217,7 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.main_layout = QtWidgets.QVBoxLayout(self)
         self.main_layout.addLayout(self.first_layout)
 
-    def add_widgets_to_layouts(self) :
+    def add_widgets_to_layouts(self):
         self.followers_layout.addWidget(self.followers_label)
         self.followers_layout.addWidget(self.followers_slider_frame)
         self.first_layout.addWidget(self.followers_frame)
@@ -250,18 +250,18 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.last_layout.addWidget(self.clear_btn)
 
         self.last_layout.addWidget(self.validation_btn)
-        try :
+        try:
             self.last_layout.addWidget(self.influencers_count_label)
-        except :
+        except:
             pass
         self.main_layout.addLayout(self.last_layout)
 
-    def setup_connections(self) :
-        self.min_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(followers=True))
-        self.max_followers_slider.valueChanged.connect(lambda : self.get_influencers_count(followers=True))
-        self.min_engagement_rate_slider.valueChanged.connect(lambda : self.get_influencers_count(engagement=True))
-        self.max_engagement_rate_slider.valueChanged.connect(lambda : self.get_influencers_count(engagement=True))
-        self.available_countries.itemChanged.connect(lambda : self.get_influencers_count(countries=True))
+    def setup_connections(self):
+        self.min_followers_slider.valueChanged.connect(lambda: self.get_influencers_count(followers=True))
+        self.max_followers_slider.valueChanged.connect(lambda: self.get_influencers_count(followers=True))
+        self.min_engagement_rate_slider.valueChanged.connect(lambda: self.get_influencers_count(engagement=True))
+        self.max_engagement_rate_slider.valueChanged.connect(lambda: self.get_influencers_count(engagement=True))
+        self.available_countries.itemChanged.connect(lambda: self.get_influencers_count(countries=True))
         self.yes_check_box.stateChanged.connect(self.get_influencers_count)
         self.dm_checkbox.stateChanged.connect(self.get_influencers_count)
         self.email_checkbox.stateChanged.connect(self.get_influencers_count)
@@ -271,34 +271,34 @@ class CreateSelectionTab(QtWidgets.QWidget) :
 
     # END UI
 
-    def control_slider(self, min, max) :
-        if max.value() < min.value() :
+    def control_slider(self, min, max):
+        if max.value() < min.value():
             min.setValue(max.value())
 
-    def get_selected_countries(self) :
+    def get_selected_countries(self):
         list = []
-        if self.available_countries.item(0).checkState() == Qt.Unchecked :
-            for i in range(1, len(get_available_countries()) + 1) :
-                if self.available_countries.item(i).checkState() == Qt.Checked :
+        if self.available_countries.item(0).checkState() == Qt.Unchecked:
+            for i in range(1, len(get_available_countries()) + 1):
+                if self.available_countries.item(i).checkState() == Qt.Checked:
                     list.append(self.available_countries.item(i).text())
-        else :
+        else:
             list = None
         return list
 
-    def get_influencers_count(self, followers=None, engagement=None, countries=None) :
-        if followers :
+    def get_influencers_count(self, followers=None, engagement=None, countries=None):
+        if followers:
             self.control_slider(self.min_followers_slider, self.max_followers_slider)
             self.min_followers = self.min_followers_slider.value()
             self.min_followers_label.setText(f"Min: {self.min_followers}k")
             self.max_followers = self.max_followers_slider.value()
             self.max_followers_label.setText(f"Max: {self.max_followers}k")
-        elif engagement :
+        elif engagement:
             self.control_slider(self.min_engagement_rate_slider, self.max_engagement_rate_slider)
             self.min_engagement_rate = self.min_engagement_rate_slider.value()
             self.min_engagement_rate_label.setText(f"Min: {self.min_engagement_rate}%")
             self.max_engagement_rate = self.max_engagement_rate_slider.value()
             self.max_engagement_rate_label.setText(f"Max: {self.max_engagement_rate}%")
-        elif countries :
+        elif countries:
             self.thread = QtCore.QThread(self)
             self.worker = Worker(self)
             self.worker.moveToThread(self.thread)
@@ -308,39 +308,39 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         engagement_rate_range = (float(self.min_engagement_rate), float(self.max_engagement_rate))
         countries = self.get_selected_countries()
         with_email = None
-        if self.yes_check_box.checkState() == Qt.Checked :
+        if self.yes_check_box.checkState() == Qt.Checked:
             with_email = True
         contacted_by_checkboxes = [self.not_yet_checkbox, self.dm_checkbox, self.email_checkbox,
                                    self.dm_and_email_checkbox]
         contacted_by = []
-        for checkbox in contacted_by_checkboxes :
-            if checkbox.checkState() == Qt.Checked and checkbox.text() == "Not yet" :
+        for checkbox in contacted_by_checkboxes:
+            if checkbox.checkState() == Qt.Checked and checkbox.text() == "Not yet":
                 contacted_by.append("not yet")
-            elif checkbox.checkState() == Qt.Checked and checkbox.text() == "DM only" :
+            elif checkbox.checkState() == Qt.Checked and checkbox.text() == "DM only":
                 contacted_by.append("DM")
-            elif checkbox.checkState() == Qt.Checked and checkbox.text() == "Mail only" :
+            elif checkbox.checkState() == Qt.Checked and checkbox.text() == "Mail only":
                 contacted_by.append("mail only")
-            elif checkbox.checkState() == Qt.Checked and checkbox.text() == "DM and mail" :
+            elif checkbox.checkState() == Qt.Checked and checkbox.text() == "DM and mail":
                 contacted_by.append("DM and mail")
-        if len(contacted_by) == 4 :
+        if len(contacted_by) == 4:
             contacted_by = None
-        try :
+        try:
             self.selection = Selection(followers_range=followers_count_range,
                                        engagement_rate_range=engagement_rate_range, countries=countries,
                                        with_email_address=with_email,
                                        contacted_by=contacted_by)
             self.influencers_count = self.selection.lenght
             self.influencers_count_label.setText(f"Selected influencers count: {str(self.influencers_count)}")
-        except :
+        except:
             pass
 
-    def clear(self) :
+    def clear(self):
         self.min_followers_slider.setValue(5)
         self.max_followers_slider.setValue(200)
         self.min_engagement_rate_slider.setValue(0)
         self.max_engagement_rate_slider.setValue(100)
         self.available_countries.item(0).setCheckState(Qt.Checked)
-        for i in range(1, len(get_available_countries()) + 1) :
+        for i in range(1, len(get_available_countries()) + 1):
             self.available_countries.item(i).setCheckState(Qt.Unchecked)
         self.yes_check_box.setCheckState(Qt.Unchecked)
         self.not_yet_checkbox.setCheckState(Qt.Checked)
@@ -348,7 +348,7 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         self.email_checkbox.setCheckState(Qt.Checked)
         self.dm_and_email_checkbox.setCheckState(Qt.Checked)
 
-    def save_selection(self) :
+    def save_selection(self):
         self.dialog = QtWidgets.QDialog(self)
         self.dialog.setWindowTitle("Create Selection")
         dialog_main_layout = QtWidgets.QVBoxLayout(self.dialog)
@@ -385,15 +385,15 @@ class CreateSelectionTab(QtWidgets.QWidget) :
         dialog_main_layout.addLayout(dialog_H_layout_1)
         dialog_main_layout.addLayout(dialog_H_layout_2)
 
-        def save(obj) :
-            try :
+        def save(obj):
+            try:
                 obj.selection.save()
                 message_box = QtWidgets.QMessageBox(obj)
                 message_box.setText(f"Selection of name '{edit.text()}', created.")
                 message_box.show()
-            except :
+            except:
                 pass
 
-        self.dialog.accepted.connect(lambda : save(self))
+        self.dialog.accepted.connect(lambda: save(self))
 
         self.dialog.exec_()

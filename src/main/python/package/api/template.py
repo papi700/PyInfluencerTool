@@ -7,117 +7,118 @@ import re
 from package.api.constants import TEMPLATES_DIR, TEMPLATES_VARIABLES, TEMPLATES_VARIABLES_REGEX
 
 
-def get_templates() :
+def get_templates():
     templates = []
     files = glob(os.path.join(TEMPLATES_DIR, "*.json"))
-    for file in files :
-        with open(file, "r") as f :
+    for file in files:
+        with open(file, "r") as f:
             template_data = json.load(f)
             template_type = template_data.get("type")
             template_name = template_data.get("name")
             template_uuid = template_data.get("uuid")
-            if template_type == "email" :
+            if template_type == "email":
                 template_subject = template_data.get("subject")
                 template_body = template_data.get("body")
                 template = EmailTemplate(type=template_type, name=template_name, uuid=template_uuid,
                                          subject=template_subject, body=template_body)
                 templates.append(template)
-            else :
-                template_content = template_data.get("content")
-                template = DM_template(type=template_type, name=template_name, uuid=template_uuid,
-                                       content=template_subject)
+            else:
+                # template_content = template_data.get("content")
+                # template = DMTemplate(type=template_type, name=template_name, uuid=template_uuid,
+                # content=template_subject)
+                pass
             templates.append(template)
     return templates
 
 
-class EmailTemplate :
-    def __init__(self, type="", name="", uuid="", subject="", body="") :
+class EmailTemplate:
+    def __init__(self, type="", name="", uuid="", subject="", body=""):
         self.type = "email"
-        if name == "" :
+        if name == "":
             directory_lenght = len(glob(os.path.join(TEMPLATES_DIR, "*.json")))
             self.name = "template_" + str(directory_lenght + 1)
-        else :
+        else:
             self.name = name
-        if uuid == "" :
+        if uuid == "":
             self.uuid = str(uuid4())
-        else :
+        else:
             self.uuid = uuid
         self.subject = subject
         self.body = body
 
-    def check_variables(self) :
+    def check_variables(self):
         invalid_variables = []
         matching_list = []
         pattern = re.compile(TEMPLATES_VARIABLES_REGEX)
         subject_matches = pattern.finditer(self.subject)
         body_matches = pattern.finditer(self.body)
-        for match in subject_matches :
+        for match in subject_matches:
             matching_list.append((match, "subject"))
-        for match in body_matches :
+        for match in body_matches:
             matching_list.append((match, "body"))
-        for match_and_place in matching_list :
-            if match_and_place[0].group(1) not in TEMPLATES_VARIABLES :
+        for match_and_place in matching_list:
+            if match_and_place[0].group(1) not in TEMPLATES_VARIABLES:
                 invalid_variables.append((match_and_place[0].group(1), match_and_place[1]))
-            if match_and_place == matching_list[len(matching_list) - 1] :
-                if invalid_variables == [] :
+            if match_and_place == matching_list[len(matching_list) - 1]:
+                if invalid_variables == []:
                     return True
-                else :
+                else:
                     return invalid_variables
 
-    def get_variables(self) :
+    def get_variables(self):
         variables = []
-        if self.check_variables() == True :
+        if self.check_variables() == True:
             pattern = re.compile(TEMPLATES_VARIABLES_REGEX)
             subject_matches = pattern.finditer(self.subject)
             body_matches = pattern.finditer(self.body)
-            for match in subject_matches :
-                if not match in variables :
+            for match in subject_matches:
+                if not match in variables:
                     variables.append((match.group(0), "subject"))
-            for match in body_matches :
-                if not match in variables :
+            for match in body_matches:
+                if not match in variables:
                     variables.append((match.group(0), "body"))
             return variables
-        else :
+        else:
             return False
 
-    def replace_variables_in(self, place, values) :
-        if place == "subject" :
+    def replace_variables_in(self, place, values):
+        if place == "subject":
             text = self.subject
-        else :
+        else:
             text = self.body
         variables = self.get_variables()
         variables_and_keys = [("[username]", 0), ("[followers]", 1), ("[engagement rate]", 2), ("[country]", 3),
                               ("[name]", 4), ("[mail]", 5)]
-        if variables :
+        if variables:
             place_variables = []
-            for variable in variables :
-                if variable[1] == place :
+            for variable in variables:
+                if variable[1] == place:
                     place_variables.append(variable[0])
-            for variable in place_variables :
-                for i in range(len(variables_and_keys)) :
-                    if variable == variables_and_keys[i][0] :
+            for variable in place_variables:
+                for i in range(len(variables_and_keys)):
+                    if variable == variables_and_keys[i][0]:
                         text = text.replace(variable, values[variables_and_keys[i][1]])
         return text
 
     @property
-    def path(self) :
+    def path(self):
         return os.path.join(TEMPLATES_DIR, self.uuid + ".json")
 
-    def save(self) :
-        if not os.path.exists(TEMPLATES_DIR) :
+    def save(self):
+        if not os.path.exists(TEMPLATES_DIR):
             os.makedirs(TEMPLATES_DIR)
-        data = {"type" : self.type, "name" : self.name,
-                "subject" : self.subject,
-                "body" : self.body}
-        with open(self.path, "w") as f :
+        data = {"type": self.type, "name": self.name,
+                "subject": self.subject,
+                "body": self.body}
+        with open(self.path, "w") as f:
             json.dump(data, f, indent=4)
 
 
-class DMTemplate :
+class DMTemplate:
     pass
 
 
-if __name__ == '__main__' :
+if __name__ == '__main__':
     # subject = "Let’s build something together! [username] + Vlowny"
     body = """
     Hi [username],

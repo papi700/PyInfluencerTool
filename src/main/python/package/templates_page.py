@@ -19,17 +19,15 @@ class TemplatesPage(QtWidgets.QWidget) :
     def create_widgets(self) :
         self.main_frame = QtWidgets.QFrame(self)
         self.main_frame.setObjectName("main_frame")
-        shadow = QtWidgets.QGraphicsDropShadowEffect(self)
-        shadow.setBlurRadius(10)
-        shadow.setOffset(2.5, -4)
-        shadow.setColor(QtGui.QColor("black"))
-        print(shadow.xOffset(), shadow.yOffset())
+        # shadow = QtWidgets.QGraphicsDropShadowEffect(self)
+        # shadow.setBlurRadius(10)
+        # shadow.setOffset(2.5, -4)
+        # shadow.setColor(QtGui.QColor("black"))
+        # print(shadow.xOffset(), shadow.yOffset())
         self.tabs = QtWidgets.QTabWidget()
-        # self.tabs.setGraphicsEffect(shadow)
         # self.tabs.tabBar().setGraphicsEffect(shadow)
         self.create_template_tab = CreateTemplateTab(ctx=self.ctx)
         self.tabs.addTab(self.create_template_tab, "Create template")
-        self.tabs.tabBar().setGraphicsEffect(shadow)
 
     def modify_widgets(self) :
         css_file = self.ctx.get_resource("templates_page.css")

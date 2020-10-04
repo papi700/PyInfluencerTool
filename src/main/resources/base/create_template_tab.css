@@ -20,3 +20,6 @@ QPushButton{
     padding: 0px 8px 0px 8px;
     min-height: 32px;
 }
+QInputDialog{
+    min-width: 250px;
+}

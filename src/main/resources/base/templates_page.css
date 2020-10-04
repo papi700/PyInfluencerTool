@@ -1,8 +1,10 @@
 QTabBar::tab{
     height: 30px;
     width:  200px;
-    border: 0px solid;
-    background: white;
+    border: 0.5px solid rgb(5, 63, 91);
+    border-bottom: 0px solid;
+    border-left: 0px solid;
+    border-radius: 5px;
     color: rgb(80, 127, 230);
     font-size: 15px;
     margin-top: 10px;
@@ -13,7 +15,7 @@ QTabBar::tab:selected {
 }
 
 QTabWidget::pane {
-    border: 0px solid;
+    border-top: 0.5px solid rgb(5, 63, 91);
     color: #001b28;
 }
 
